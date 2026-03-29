@@ -1,24 +1,26 @@
 {
-  "SessionStart": [
-    {
-      "matcher": "startup|resume|clear|compact",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/inject-router.mjs\""
-        }
-      ]
-    }
-  ],
-  "PreToolUse": [
-    {
-      "matcher": "Read|Edit|Write|Bash",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/route-skills.mjs\""
-        }
-      ]
-    }
-  ]
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/inject-router.mjs\""
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Read|Edit|MultiEdit|Write|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/route-skills.mjs\""
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -19,7 +19,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const PLUGIN_ROOT = process.env.CLAUDE_PLUGIN_ROOT || join(__dirname, '..');
 const INDEX_PATH = join(PLUGIN_ROOT, 'skills-index.json');
 const SKILLS_DIR = join(PLUGIN_ROOT, 'skills');
-const DEDUP_DIR = join('/tmp', 'ios-skills-dedup');
+const STATE_DIR = process.env.CLAUDE_PLUGIN_DATA || join(process.env.HOME || '/tmp', '.ios-skills');
+const DEDUP_DIR = join(STATE_DIR, 'dedup');
 const DEBUG = process.env.IOS_SKILLS_DEBUG === '1';
 
 // ── Read stdin ──────────────────────────────────────────────────
@@ -71,7 +72,7 @@ try {
 // ── Match skills ────────────────────────────────────────────────
 let candidates = []; // { skillId, priority }
 
-if (['Read', 'Edit', 'Write'].includes(toolName) && toolInput.file_path) {
+if (['Read', 'Edit', 'MultiEdit', 'Write'].includes(toolName) && toolInput.file_path) {
   const filePath = toolInput.file_path;
   const fileName = basename(filePath);
 
@@ -202,7 +203,10 @@ if (selected.length === 0) {
   const header = `[ios-skills] Injected ${selected.length} skill(s): ${selected.map(s => s.id).join(', ')}`;
 
   output({
-    additionalContext: `${header}\n\n${parts.join('\n\n---\n\n')}`
+    hookSpecificOutput: {
+      hookEventName: 'PreToolUse',
+      additionalContext: `${header}\n\n${parts.join('\n\n---\n\n')}`
+    }
   });
 
   debug('injected', selected.map(s => s.id));

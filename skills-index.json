@@ -69,19 +69,19 @@
       },
       {
         "comment": "HealthKit files",
-        "pattern": "*Health*.swift|*Workout*.swift|*HK*.swift",
+        "pattern": "*HealthKit*.swift|*HealthStore*.swift|*HKQuery*.swift|*HKSample*.swift|*WorkoutSession*.swift",
         "skills": ["dpearson2699--healthkit"],
         "priority": 8
       },
       {
         "comment": "MapKit files",
-        "pattern": "*Map*.swift|*Location*.swift|*Geo*.swift",
+        "pattern": "*MapKit*.swift|*MapView*.swift|*MKAnnotation*.swift|*MKMapView*.swift|*CLLocation*.swift",
         "skills": ["dpearson2699--mapkit"],
         "priority": 8
       },
       {
         "comment": "StoreKit / IAP files",
-        "pattern": "*Store*.swift|*Purchase*.swift|*Subscription*.swift|*Product*.swift",
+        "pattern": "*StoreKit*.swift|*InAppPurchase*.swift|*SKProduct*.swift|*Subscription*.swift|*Paywall*.swift",
         "skills": ["dpearson2699--storekit"],
         "priority": 8
       },
@@ -93,7 +93,7 @@
       },
       {
         "comment": "CoreML / Vision / AI files",
-        "pattern": "*ML*.swift|*Vision*.swift|*CoreML*.swift|*Prediction*.swift|*FoundationModel*.swift",
+        "pattern": "*CoreML*.swift|*MLModel*.swift|*VNRequest*.swift|*VisionKit*.swift|*Prediction*.swift|*FoundationModel*.swift",
         "skills": ["dpearson2699--coreml", "dpearson2699--apple-on-device-ai"],
         "priority": 8
       },
@@ -123,13 +123,13 @@
       },
       {
         "comment": "CloudKit files",
-        "pattern": "*CloudKit*.swift|*CK*.swift|*iCloud*.swift",
+        "pattern": "*CloudKit*.swift|*CKRecord*.swift|*CKContainer*.swift|*iCloudSync*.swift",
         "skills": ["dpearson2699--cloudkit"],
         "priority": 8
       },
       {
         "comment": "ARKit / RealityKit files",
-        "pattern": "*AR*.swift|*Reality*.swift|*Anchor*.swift|*Scene*.swift",
+        "pattern": "*ARView*.swift|*ARSession*.swift|*RealityKit*.swift|*AnchorEntity*.swift|*RealityView*.swift",
         "skills": ["dpearson2699--realitykit"],
         "priority": 8
       },
@@ -165,7 +165,7 @@
       },
       {
         "comment": "GameKit / SpriteKit files",
-        "pattern": "*Game*.swift|*Sprite*.swift|*SKScene*.swift|*GK*.swift",
+        "pattern": "*GameKit*.swift|*GKMatch*.swift|*SKScene*.swift|*SpriteKit*.swift|*SKSpriteNode*.swift|*GameCenter*.swift",
         "skills": ["dpearson2699--gamekit", "dpearson2699--spritekit"],
         "priority": 8
       },
@@ -177,7 +177,7 @@
       },
       {
         "comment": "Photo / Camera files",
-        "pattern": "*Photo*.swift|*Camera*.swift|*PHAsset*.swift|*Image*.swift",
+        "pattern": "*PhotoKit*.swift|*PHAsset*.swift|*PHPicker*.swift|*CameraCapture*.swift|*PhotoLibrary*.swift",
         "skills": ["dpearson2699--photokit"],
         "priority": 7
       },
@@ -386,7 +386,9 @@
         "dpearson2699--tipkit",
         "dpearson2699--vision-framework",
         "dpearson2699--weatherkit",
-        "dpearson2699--widgetkit"
+        "dpearson2699--widgetkit",
+        "dpearson2699--ios-accessibility",
+        "dpearson2699--swift-concurrency"
       ]
     },
 
