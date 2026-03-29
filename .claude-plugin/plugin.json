@@ -1,0 +1,7 @@
+{
+  "name": "ios-skills",
+  "version": "1.0.0",
+  "description": "169 iOS/Swift/Xcode agent skills with phase-aware routing. Covers the full lifecycle: ideation → design → develop → test → deploy → iterate.",
+  "author": "JordanCoin",
+  "homepage": "https://github.com/JordanCoin/ios-skills-collection"
+}

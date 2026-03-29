@@ -1,0 +1,11 @@
+# Codex CLI compatibility
+# Skills in skills/ are auto-discovered by Codex via SKILL.md frontmatter.
+# This file provides top-level metadata for the collection.
+
+name: ios-skills-collection
+description: >
+  169 iOS/Swift/Xcode agent skills covering the full development lifecycle.
+  Organized into phases: ideation, design, develop, test, deploy, iterate.
+  Includes skills from twostraws, AvdLee, dpearson2699, and more.
+author: JordanCoin
+version: 1.0.0

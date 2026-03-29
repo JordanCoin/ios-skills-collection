@@ -1,0 +1,488 @@
+{
+  "version": 1,
+  "config": {
+    "maxSkillsPerInjection": 3,
+    "maxByteBudget": 24000
+  },
+
+  "routing": {
+    "fileRules": [
+      {
+        "comment": "SwiftUI view files",
+        "pattern": "*View.swift|*Screen.swift|*Page.swift|ContentView*",
+        "skills": ["twostraws--swiftui-pro", "dadederk--ios-accessibility"],
+        "priority": 10
+      },
+      {
+        "comment": "SwiftUI animation files",
+        "pattern": "*Animation*.swift|*Transition*.swift|*Motion*.swift",
+        "skills": ["dpearson2699--swiftui-animation", "jordancoin--motioneyes"],
+        "priority": 9
+      },
+      {
+        "comment": "SwiftUI navigation files",
+        "pattern": "*Router*.swift|*Navigation*.swift|*Coordinator*.swift",
+        "skills": ["dpearson2699--swiftui-navigation"],
+        "priority": 9
+      },
+      {
+        "comment": "Test files",
+        "pattern": "*Tests.swift|*Test.swift|*Spec.swift|*Tests/*",
+        "skills": ["avdlee--swift-testing-expert"],
+        "priority": 10
+      },
+      {
+        "comment": "SwiftData / Core Data models",
+        "pattern": "*Model.swift|*Entity.swift|*.xcdatamodeld*|*Schema*.swift|*Migration*.swift",
+        "skills": ["twostraws--swiftdata-pro", "jordancoin--core-data"],
+        "priority": 10
+      },
+      {
+        "comment": "Package manifest",
+        "pattern": "Package.swift|Package.resolved",
+        "skills": ["avdlee--spm-build-analysis", "dpearson2699--swift-language"],
+        "priority": 9
+      },
+      {
+        "comment": "Xcode project files",
+        "pattern": "*.xcodeproj*|*.pbxproj|*.xcworkspace*|*.xcscheme",
+        "skills": ["avdlee--xcode-project-analyzer"],
+        "priority": 8
+      },
+      {
+        "comment": "App config and entitlements",
+        "pattern": "Info.plist|*.entitlements|PrivacyInfo.xcprivacy",
+        "skills": ["truongduy2611--app-store-preflight", "dpearson2699--app-store-review"],
+        "priority": 9
+      },
+      {
+        "comment": "Widget extension files",
+        "pattern": "*Widget*.swift|*TimelineProvider*.swift|*TimelineEntry*.swift",
+        "skills": ["dpearson2699--widgetkit"],
+        "priority": 9
+      },
+      {
+        "comment": "App Intent files",
+        "pattern": "*Intent*.swift|*AppShortcut*.swift",
+        "skills": ["dpearson2699--app-intents"],
+        "priority": 9
+      },
+      {
+        "comment": "HealthKit files",
+        "pattern": "*Health*.swift|*Workout*.swift|*HK*.swift",
+        "skills": ["dpearson2699--healthkit"],
+        "priority": 8
+      },
+      {
+        "comment": "MapKit files",
+        "pattern": "*Map*.swift|*Location*.swift|*Geo*.swift",
+        "skills": ["dpearson2699--mapkit"],
+        "priority": 8
+      },
+      {
+        "comment": "StoreKit / IAP files",
+        "pattern": "*Store*.swift|*Purchase*.swift|*Subscription*.swift|*Product*.swift",
+        "skills": ["dpearson2699--storekit"],
+        "priority": 8
+      },
+      {
+        "comment": "Push notification files",
+        "pattern": "*Notification*.swift|*Push*.swift|*UNUser*.swift",
+        "skills": ["dpearson2699--push-notifications"],
+        "priority": 8
+      },
+      {
+        "comment": "CoreML / Vision / AI files",
+        "pattern": "*ML*.swift|*Vision*.swift|*CoreML*.swift|*Prediction*.swift|*FoundationModel*.swift",
+        "skills": ["dpearson2699--coreml", "dpearson2699--apple-on-device-ai"],
+        "priority": 8
+      },
+      {
+        "comment": "Networking files",
+        "pattern": "*Network*.swift|*API*.swift|*Service*.swift|*Client*.swift|*URLSession*.swift",
+        "skills": ["dpearson2699--ios-networking"],
+        "priority": 7
+      },
+      {
+        "comment": "Authentication files",
+        "pattern": "*Auth*.swift|*Login*.swift|*SignIn*.swift|*Credential*.swift",
+        "skills": ["dpearson2699--authentication"],
+        "priority": 8
+      },
+      {
+        "comment": "Accessibility files",
+        "pattern": "*Accessibility*.swift|*A11y*.swift|*VoiceOver*.swift",
+        "skills": ["dadederk--ios-accessibility", "pasqualevittoriosi--swift-accessibility"],
+        "priority": 9
+      },
+      {
+        "comment": "Bluetooth files",
+        "pattern": "*Bluetooth*.swift|*BLE*.swift|*CBCentral*.swift|*CBPeripheral*.swift",
+        "skills": ["dpearson2699--core-bluetooth"],
+        "priority": 8
+      },
+      {
+        "comment": "CloudKit files",
+        "pattern": "*CloudKit*.swift|*CK*.swift|*iCloud*.swift",
+        "skills": ["dpearson2699--cloudkit"],
+        "priority": 8
+      },
+      {
+        "comment": "ARKit / RealityKit files",
+        "pattern": "*AR*.swift|*Reality*.swift|*Anchor*.swift|*Scene*.swift",
+        "skills": ["dpearson2699--realitykit"],
+        "priority": 8
+      },
+      {
+        "comment": "Liquid Glass / iOS 26 UI",
+        "pattern": "*Glass*.swift|*LiquidGlass*.swift|*Glassware*.swift",
+        "skills": ["dpearson2699--swiftui-liquid-glass", "harryworld--xcode-26"],
+        "priority": 9
+      },
+      {
+        "comment": "UIKit legacy / interop files",
+        "pattern": "*ViewController*.swift|*UIKit*.swift|*Representable*.swift",
+        "skills": ["dpearson2699--swiftui-uikit-interop", "arimunandar--uikit-layouting"],
+        "priority": 7
+      },
+      {
+        "comment": "Localization files",
+        "pattern": "*.strings|*.stringsdict|*Localizable*|*.xcstrings|*Localization*.swift",
+        "skills": ["dpearson2699--ios-localization"],
+        "priority": 8
+      },
+      {
+        "comment": "Security files",
+        "pattern": "*Security*.swift|*Keychain*.swift|*Crypto*.swift|*Biometric*.swift",
+        "skills": ["dpearson2699--ios-security", "dpearson2699--cryptokit"],
+        "priority": 8
+      },
+      {
+        "comment": "Charts files",
+        "pattern": "*Chart*.swift|*Graph*.swift|*Plot*.swift",
+        "skills": ["dpearson2699--swift-charts"],
+        "priority": 8
+      },
+      {
+        "comment": "GameKit / SpriteKit files",
+        "pattern": "*Game*.swift|*Sprite*.swift|*SKScene*.swift|*GK*.swift",
+        "skills": ["dpearson2699--gamekit", "dpearson2699--spritekit"],
+        "priority": 8
+      },
+      {
+        "comment": "Background processing files",
+        "pattern": "*Background*.swift|*BGTask*.swift|*BackgroundTask*.swift",
+        "skills": ["dpearson2699--background-processing"],
+        "priority": 8
+      },
+      {
+        "comment": "Photo / Camera files",
+        "pattern": "*Photo*.swift|*Camera*.swift|*PHAsset*.swift|*Image*.swift",
+        "skills": ["dpearson2699--photokit"],
+        "priority": 7
+      },
+      {
+        "comment": "Any Swift file — baseline style",
+        "pattern": "*.swift",
+        "skills": ["jordancoin--swift-style-guide"],
+        "priority": 1
+      }
+    ],
+
+    "bashRules": [
+      {
+        "comment": "xcodebuild commands",
+        "pattern": "xcodebuild",
+        "skills": ["jordancoin--xcodebuild-cli", "avdlee--xcode-build-orchestrator"],
+        "priority": 10
+      },
+      {
+        "comment": "swift test",
+        "pattern": "swift\\s+test",
+        "skills": ["avdlee--swift-testing-expert"],
+        "priority": 10
+      },
+      {
+        "comment": "swift build",
+        "pattern": "swift\\s+build",
+        "skills": ["avdlee--spm-build-analysis"],
+        "priority": 8
+      },
+      {
+        "comment": "simulator commands",
+        "pattern": "xcrun\\s+simctl|simctl",
+        "skills": ["jordancoin--xcodebuild-cli"],
+        "priority": 9
+      },
+      {
+        "comment": "App Store Connect CLI",
+        "pattern": "\\basc\\b|app-store-connect",
+        "skills": ["jordancoin--asc-cli", "rudrankriyam--asc-workflow"],
+        "priority": 10
+      },
+      {
+        "comment": "fastlane",
+        "pattern": "\\bfastlane\\b|\\bgym\\b|\\bdeliver\\b|\\bpilot\\b",
+        "skills": ["rudrankriyam--asc-release-flow"],
+        "priority": 8
+      },
+      {
+        "comment": "code signing",
+        "pattern": "codesign|security\\s+find-identity|provisioning",
+        "skills": ["rudrankriyam--asc-signing-setup"],
+        "priority": 8
+      },
+      {
+        "comment": "swiftlint",
+        "pattern": "swiftlint|swift-format",
+        "skills": ["jordancoin--swift-style-guide"],
+        "priority": 7
+      },
+      {
+        "comment": "notarization",
+        "pattern": "notarytool|xcrun\\s+altool|staple",
+        "skills": ["rudrankriyam--asc-notarization"],
+        "priority": 9
+      },
+      {
+        "comment": "instruments / profiling",
+        "pattern": "\\binstruments\\b|xctrace|leaks\\b|allocations",
+        "skills": ["dpearson2699--debugging-instruments"],
+        "priority": 9
+      },
+      {
+        "comment": "xcrun general",
+        "pattern": "xcrun",
+        "skills": ["jordancoin--xcodebuild-cli"],
+        "priority": 5
+      }
+    ]
+  },
+
+  "phases": {
+    "ideation": {
+      "description": "Market research, competitor analysis, concept validation",
+      "primary": [
+        "eronred--competitor-analysis",
+        "eronred--market-pulse",
+        "eronred--keyword-research",
+        "eronred--app-analytics",
+        "eronred--competitor-tracking"
+      ],
+      "secondary": [
+        "eronred--app-marketing-context",
+        "eronred--market-movers"
+      ]
+    },
+
+    "design": {
+      "description": "UI/UX design, prototyping, accessibility, design systems",
+      "primary": [
+        "jordancoin--design-philosophy",
+        "jordancoin--pencil-mcp",
+        "dadederk--ios-accessibility",
+        "twostraws--swiftui-pro"
+      ],
+      "secondary": [
+        "pasqualevittoriosi--swift-accessibility",
+        "dpearson2699--ios-accessibility",
+        "eronred--app-icon-optimization",
+        "eronred--screenshot-optimization",
+        "eronred--onboarding-optimization"
+      ]
+    },
+
+    "develop": {
+      "description": "Coding, framework integration, architecture, UI implementation",
+      "primary": [
+        "twostraws--swiftui-pro",
+        "twostraws--swift-concurrency-pro",
+        "twostraws--swiftdata-pro",
+        "jordancoin--swift-style-guide",
+        "jordancoin--core-data"
+      ],
+      "secondary": [
+        "avdlee--swiftui-expert",
+        "avdlee--update-swiftui-apis",
+        "jordancoin--swiftui-expert",
+        "jordancoin--swift-concurrency",
+        "arimunandar--vip-architecture",
+        "arimunandar--uikit-layouting",
+        "arimunandar--legacy-migration",
+        "arimunandar--swiftui-patterns",
+        "arimunandar--swift-concurrency",
+        "arimunandar--uikit-legacy",
+        "arimunandar--ios-performance",
+        "arimunandar--ios-security",
+        "dpearson2699--swift-language",
+        "dpearson2699--swift-codable",
+        "dpearson2699--ios-networking",
+        "dpearson2699--ios-security",
+        "dpearson2699--ios-localization",
+        "dpearson2699--authentication",
+        "dpearson2699--background-processing",
+        "dpearson2699--push-notifications"
+      ],
+      "frameworks": [
+        "dpearson2699--accessorysetupkit",
+        "dpearson2699--activitykit",
+        "dpearson2699--adattributionkit",
+        "dpearson2699--alarmkit",
+        "dpearson2699--app-clips",
+        "dpearson2699--app-intents",
+        "dpearson2699--apple-on-device-ai",
+        "dpearson2699--appmigrationkit",
+        "dpearson2699--audioaccessorykit",
+        "dpearson2699--avkit",
+        "dpearson2699--browserenginekit",
+        "dpearson2699--callkit",
+        "dpearson2699--carplay",
+        "dpearson2699--cloudkit",
+        "dpearson2699--contacts-framework",
+        "dpearson2699--core-bluetooth",
+        "dpearson2699--core-motion",
+        "dpearson2699--core-nfc",
+        "dpearson2699--coreml",
+        "dpearson2699--cryptokit",
+        "dpearson2699--cryptotokenkit",
+        "dpearson2699--device-integrity",
+        "dpearson2699--dockkit",
+        "dpearson2699--energykit",
+        "dpearson2699--eventkit",
+        "dpearson2699--financekit",
+        "dpearson2699--gamekit",
+        "dpearson2699--healthkit",
+        "dpearson2699--homekit",
+        "dpearson2699--mapkit",
+        "dpearson2699--metrickit",
+        "dpearson2699--musickit",
+        "dpearson2699--natural-language",
+        "dpearson2699--paperkit",
+        "dpearson2699--passkit",
+        "dpearson2699--pdfkit",
+        "dpearson2699--pencilkit",
+        "dpearson2699--permissionkit",
+        "dpearson2699--photokit",
+        "dpearson2699--realitykit",
+        "dpearson2699--relevancekit",
+        "dpearson2699--scenekit",
+        "dpearson2699--sensorkit",
+        "dpearson2699--shareplay-activities",
+        "dpearson2699--speech-recognition",
+        "dpearson2699--spritekit",
+        "dpearson2699--storekit",
+        "dpearson2699--swift-charts",
+        "dpearson2699--swiftdata",
+        "dpearson2699--swiftui-animation",
+        "dpearson2699--swiftui-gestures",
+        "dpearson2699--swiftui-layout-components",
+        "dpearson2699--swiftui-liquid-glass",
+        "dpearson2699--swiftui-navigation",
+        "dpearson2699--swiftui-patterns",
+        "dpearson2699--swiftui-performance",
+        "dpearson2699--swiftui-uikit-interop",
+        "dpearson2699--swiftui-webkit",
+        "dpearson2699--tabletopkit",
+        "dpearson2699--tipkit",
+        "dpearson2699--vision-framework",
+        "dpearson2699--weatherkit",
+        "dpearson2699--widgetkit"
+      ]
+    },
+
+    "test": {
+      "description": "Unit testing, UI testing, build optimization, performance profiling",
+      "primary": [
+        "avdlee--swift-testing-expert",
+        "avdlee--xcode-build-orchestrator",
+        "avdlee--xcode-build-benchmark",
+        "dpearson2699--debugging-instruments"
+      ],
+      "secondary": [
+        "jordancoin--swift-testing",
+        "avdlee--xcode-compilation-analyzer",
+        "avdlee--xcode-project-analyzer",
+        "avdlee--xcode-build-fixer",
+        "avdlee--spm-build-analysis",
+        "dpearson2699--swift-testing",
+        "arimunandar--ios-testing",
+        "arimunandar--code-review-checklist",
+        "arimunandar--ios-performance"
+      ]
+    },
+
+    "deploy": {
+      "description": "App Store submission, TestFlight, signing, metadata, ASO",
+      "primary": [
+        "truongduy2611--app-store-preflight",
+        "jordancoin--asc-cli",
+        "rudrankriyam--asc-release-flow",
+        "rudrankriyam--asc-testflight-orchestration",
+        "eronred--aso-audit"
+      ],
+      "secondary": [
+        "rudrankriyam--asc-workflow",
+        "rudrankriyam--asc-build-lifecycle",
+        "rudrankriyam--asc-signing-setup",
+        "rudrankriyam--asc-submission-health",
+        "rudrankriyam--asc-cli-usage",
+        "rudrankriyam--asc-metadata-sync",
+        "rudrankriyam--asc-whats-new-writer",
+        "rudrankriyam--asc-localize-metadata",
+        "rudrankriyam--asc-screenshot-resize",
+        "rudrankriyam--asc-shots-pipeline",
+        "rudrankriyam--asc-notarization",
+        "rudrankriyam--asc-crash-triage",
+        "rudrankriyam--asc-id-resolver",
+        "rudrankriyam--asc-ppp-pricing",
+        "rudrankriyam--asc-subscription-localization",
+        "rudrankriyam--asc-wall-submit",
+        "rudrankriyam--asc-xcode-build",
+        "rudrankriyam--asc-app-create-ui",
+        "rudrankriyam--asc-aso-audit",
+        "rudrankriyam--asc-revenuecat-catalog-sync",
+        "dpearson2699--app-store-review",
+        "eronred--metadata-optimization",
+        "eronred--localization",
+        "eronred--ab-test-store-listing",
+        "eronred--app-store-featured",
+        "eronred--apple-search-ads",
+        "eronred--in-app-events",
+        "eronred--seasonal-aso",
+        "eronred--subscription-lifecycle",
+        "eronred--press-and-pr",
+        "eronred--ua-campaign",
+        "eronred--app-launch",
+        "eronred--monetization-strategy",
+        "eronred--asc-metrics",
+        "eronred--app-clips",
+        "eronred--android-aso"
+      ]
+    },
+
+    "iterate": {
+      "description": "Post-launch monitoring, animation debugging, autonomous improvement",
+      "primary": [
+        "jordancoin--ralph-loop",
+        "jordancoin--motioneyes",
+        "eronred--crash-analytics",
+        "eronred--retention-optimization"
+      ],
+      "secondary": [
+        "eronred--rating-prompt-strategy",
+        "eronred--review-management",
+        "eronred--app-analytics"
+      ]
+    }
+  },
+
+  "crossCutting": [
+    "jordancoin--xcodebuild-cli",
+    "jordancoin--xcode-previews",
+    "jordancoin--apple-docs-mcp",
+    "jordancoin--xcode-26-prompts",
+    "harryworld--xcode-26",
+    "jordancoin--agents-template",
+    "arimunandar--interview-patterns"
+  ]
+}
