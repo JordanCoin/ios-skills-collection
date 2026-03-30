@@ -37,14 +37,12 @@ claude plugins install ios-skills@ios-skills-collection
 
 **Codex (CLI + Mac App):**
 ```bash
-git clone https://github.com/JordanCoin/ios-skills-collection ~/.agents/ios-skills 2>/dev/null || git -C ~/.agents/ios-skills pull
-~/.agents/ios-skills/install.sh --codex
+(git clone https://github.com/JordanCoin/ios-skills-collection ~/.agents/ios-skills 2>/dev/null || git -C ~/.agents/ios-skills pull) && ~/.agents/ios-skills/install.sh --codex
 ```
 
 **Everything (Claude + Codex):**
 ```bash
-git clone https://github.com/JordanCoin/ios-skills-collection ~/.agents/ios-skills 2>/dev/null || git -C ~/.agents/ios-skills pull
-~/.agents/ios-skills/install.sh --all
+(git clone https://github.com/JordanCoin/ios-skills-collection ~/.agents/ios-skills 2>/dev/null || git -C ~/.agents/ios-skills pull) && ~/.agents/ios-skills/install.sh --all
 ```
 
 **Per-project (one session):**
