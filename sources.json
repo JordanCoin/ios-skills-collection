@@ -274,8 +274,8 @@
       "license": "MIT",
       "skills": {
         "jordancoin--design-philosophy": "skills/design-philosophy",
-        "jordancoin--pencil-mcp": "skills/pencil-mcp",
-        "jordancoin--ralph-loop": "skills/ralph-loop"
+        "jordancoin--ios-design-tokens": "skills/ios-design-tokens",
+        "jordancoin--pencil-ios-design": "skills/pencil-ios-design"
       }
     },
     {
