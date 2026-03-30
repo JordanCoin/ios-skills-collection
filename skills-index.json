@@ -279,7 +279,7 @@
       "description": "UI/UX design, prototyping, accessibility, design systems",
       "primary": [
         "jordancoin--design-philosophy",
-        "jordancoin--pencil-mcp",
+        "jordancoin--pencil-ios-design",
         "dadederk--ios-accessibility",
         "twostraws--swiftui-pro"
       ],
@@ -465,7 +465,7 @@
     "iterate": {
       "description": "Post-launch monitoring, animation debugging, autonomous improvement",
       "primary": [
-        "jordancoin--ralph-loop",
+        "jordancoin--ios-design-stack",
         "edwardsanchez--motioneyes-animation-debug",
         "eronred--crash-analytics",
         "eronred--retention-optimization"

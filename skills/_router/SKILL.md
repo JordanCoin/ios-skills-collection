@@ -8,7 +8,7 @@ description: >
 
 # iOS Skills Router
 
-You have access to **210 specialized skills** for iOS/Swift/Xcode development.
+You have access to **202 specialized skills** for iOS/Swift/Xcode development.
 Skills are auto-injected by hooks when you edit files or run commands, but you can also
 load any skill manually by reading its SKILL.md.
 
@@ -31,7 +31,7 @@ load any skill manually by reading its SKILL.md.
 | Skill | What it does |
 |-------|-------------|
 | `jordancoin--design-philosophy` | Taste-building, Dieter Rams principles |
-| `jordancoin--pencil-mcp` | Canvas design → SwiftUI code via Pencil MCP |
+| `jordancoin--pencil-ios-design` | iOS Pencil MCP design workflow with HIG patterns |
 | `dadederk--ios-accessibility` | VoiceOver, Dynamic Type, assistive tech |
 | `pasqualevittoriosi--swift-accessibility` | WCAG 2.2, App Store Nutrition Labels |
 
@@ -103,7 +103,7 @@ Pattern: `rudrankriyam--asc-{topic}`
 ### 6. Iterate — "Make it better"
 | Skill | What it does |
 |-------|-------------|
-| `jordancoin--ralph-loop` | Autonomous iteration loop until done |
+| `jordancoin--ios-design-stack` | Invocable iOS design pipeline (design → review → build → iterate) |
 | `edwardsanchez--motioneyes-animation-debug` | Debug animations from real motion logs |
 | `eronred--crash-analytics` | Crash analysis and triage |
 | `eronred--retention-optimization` | User retention improvement |
@@ -210,7 +210,7 @@ Use his versions first. Fall back to alternatives for different perspectives or 
 | API Design | `erikote04--swift-api-design-guidelines-skill` | martinlasek--swift-coding-guideline |
 | Build Optimization | `avdlee--xcode-build-orchestrator` | avdlee--xcode-build-fixer |
 | ASO | `eronred--aso-audit` | timbroddin--app-store-aso-skill |
-| Figma → SwiftUI | `daetojemax--figma-to-swiftui-skill` | jordancoin--pencil-mcp |
+| Figma → SwiftUI | `daetojemax--figma-to-swiftui-skill` | jordancoin--pencil-ios-design |
 | Simulator | `conorluddy--ios-simulator-skill` | getsentry--xcodebuildmcp-cli |
 | Code Review | `dimillian--review-swarm` | arimunandar--code-review-checklist |
 | Debugging | `dimillian--ios-debugger-agent` | dpearson2699--debugging-instruments |

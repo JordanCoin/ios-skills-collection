@@ -1,6 +1,6 @@
 # iOS Skills Collection
 
-210 iOS/Swift/Xcode agent skills aggregated from 28 authors with phase-aware routing.
+202 iOS/Swift/Xcode agent skills aggregated from 28 authors with phase-aware routing.
 Works with Claude Code (plugin + hooks), Codex CLI (raw skills), and Codex Mac App (plugin bundle).
 
 Skills sourced from [twostraws/Swift-Agent-Skills](https://github.com/twostraws/Swift-Agent-Skills) community directory and beyond.
@@ -61,7 +61,7 @@ A router skill loads at session start with:
 IDEATION → DESIGN → DEVELOP → TEST → DEPLOY → ITERATE
 ```
 
-210 skills organized across 6 phases. The router guides the agent to the right
+202 skills organized across 6 phases. The router guides the agent to the right
 skills based on what phase you're in. See `skills/_router/SKILL.md` for the full map.
 
 ## Update

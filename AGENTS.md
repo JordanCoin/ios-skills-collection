@@ -1,6 +1,6 @@
 # iOS Skills Collection
 
-210 iOS/Swift/Xcode agent skills from 28 authors with phase-aware routing.
+202 iOS/Swift/Xcode agent skills from 28 authors with phase-aware routing.
 
 ## Structure
 

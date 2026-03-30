@@ -1,7 +1,7 @@
 {
   "name": "ios-skills",
   "version": "1.0.0",
-  "description": "210 iOS/Swift/Xcode agent skills with phase-aware routing. Full lifecycle: ideation → design → develop → test → deploy → iterate.",
+  "description": "202 iOS/Swift/Xcode agent skills with phase-aware routing. Full lifecycle: ideation → design → develop → test → deploy → iterate.",
   "author": {
     "name": "JordanCoin",
     "url": "https://github.com/JordanCoin"
@@ -14,7 +14,7 @@
   "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "iOS Skills Collection",
-    "shortDescription": "210 curated iOS/Swift/Xcode skills from 28 authors",
+    "shortDescription": "202 curated iOS/Swift/Xcode skills from 28 authors",
     "longDescription": "Phase-aware iOS/Swift/Xcode skill bundle with router and hook-based auto-injection. Covers ideation, design, develop, test, deploy, and iterate phases. Skills from twostraws, AvdLee, dpearson2699, Dimillian, and 24 more authors.",
     "developerName": "JordanCoin",
     "category": "Coding",
