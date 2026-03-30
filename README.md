@@ -1,6 +1,7 @@
 # iOS Skills Collection
 
 [![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20iPadOS%20%7C%20macOS-000000.svg?logo=apple)](https://developer.apple.com)
+[![Xcode](https://img.shields.io/badge/Xcode%2026-compatible-147EFB.svg?logo=xcode)](https://developer.apple.com/xcode/)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-compatible-d97757.svg?logo=anthropic)](https://claude.ai/code)
 [![OpenAI Codex](https://img.shields.io/badge/OpenAI%20Codex-compatible-10A37F.svg)](https://developers.openai.com/codex)
 [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-standard-green.svg)](https://agentskills.io)
