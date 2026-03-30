@@ -28,7 +28,7 @@
       {
         "comment": "Test files",
         "pattern": "*Tests.swift|*Test.swift|*Spec.swift|*Tests/*",
-        "skills": ["avdlee--swift-testing-expert"],
+        "skills": ["twostraws--swift-testing-pro", "avdlee--swift-testing-expert"],
         "priority": 10
       },
       {
