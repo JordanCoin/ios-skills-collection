@@ -1,31 +1,37 @@
 # iOS Skills Collection
 
 210 iOS/Swift/Xcode agent skills aggregated from 28 authors with phase-aware routing.
-Works with Claude Code (plugin + hooks) and Codex CLI (raw skills).
+Works with Claude Code (plugin + hooks), Codex CLI (raw skills), and Codex Mac App (plugin bundle).
 
 Skills sourced from [twostraws/Swift-Agent-Skills](https://github.com/twostraws/Swift-Agent-Skills) community directory and beyond.
 
 ## Install
 
-**Claude Code:**
-```bash
-git clone https://github.com/JordanCoin/ios-skills-collection ~/.claude/ios-skills && claude plugins add ~/.claude/ios-skills
-```
-
-**Codex CLI:**
-```bash
-git clone https://github.com/JordanCoin/ios-skills-collection ~/.agents/ios-skills && ~/.agents/ios-skills/install.sh --codex
-```
-
-**Both:**
+**Everything (recommended):**
 ```bash
 git clone https://github.com/JordanCoin/ios-skills-collection ~/.agents/ios-skills && ~/.agents/ios-skills/install.sh --all
 ```
 
-**Per-project (instead of global):**
+**Claude Code only:**
+```bash
+git clone https://github.com/JordanCoin/ios-skills-collection ~/.claude/ios-skills && claude plugins add ~/.claude/ios-skills
+```
+
+**Codex only (CLI + Mac App):**
+```bash
+git clone https://github.com/JordanCoin/ios-skills-collection ~/.agents/ios-skills && ~/.agents/ios-skills/install.sh --codex
+```
+
+**Per-project:**
 ```bash
 git clone https://github.com/JordanCoin/ios-skills-collection .ios-skills && claude --plugin-dir .ios-skills
 ```
+
+| Agent | What install does |
+|-------|-------------------|
+| Claude Code | Registers as plugin with hooks (auto-inject skills on file edit) |
+| Codex CLI | Symlinks 210 skills to `~/.agents/skills/` (auto-activate on description match) |
+| Codex Mac App | Plugin bundle at `~/plugins/ios-skills` + marketplace registration |
 
 ## How It Works
 
