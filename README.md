@@ -91,9 +91,19 @@ skills based on what phase you're in. See `skills/_router/SKILL.md` for the full
 
 ## Update
 
-Skills are synced from upstream repos. The plugin warns at session start if they're stale.
-
+**Claude Code:**
 ```bash
+claude plugins marketplace update ios-skills-collection
+```
+
+**Codex / manual install:**
+```bash
+git -C ~/.agents/ios-skills pull && ~/.agents/ios-skills/install.sh --codex
+```
+
+**Sync upstream skill repos** (pulls latest SKILL.md files from all 35 source repos):
+```bash
+cd ~/.agents/ios-skills   # or wherever you cloned
 ./sync.sh           # pull latest from all upstream repos
 ./sync.sh --check   # just check what's changed, don't update
 ./sync.sh --status  # show last sync time and upstream SHAs
