@@ -9,7 +9,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "iOS Skills Collection",
-    "shortDescription": "169 curated iOS/Swift/Xcode skills from 11 authors",
+    "shortDescription": "210 curated iOS/Swift/Xcode skills from 28 authors",
     "category": "Coding",
     "capabilities": ["Interactive", "Read"]
   }

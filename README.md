@@ -55,7 +55,7 @@ A router skill loads at session start with:
 IDEATION → DESIGN → DEVELOP → TEST → DEPLOY → ITERATE
 ```
 
-204 skills organized across 6 phases. The router guides the agent to the right
+210 skills organized across 6 phases. The router guides the agent to the right
 skills based on what phase you're in. See `skills/_router/SKILL.md` for the full map.
 
 ## Update

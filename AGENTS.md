@@ -1,48 +1,56 @@
-# Agent Guidelines
+# iOS Skills Collection
 
-This repo contains ASO & App Marketing skills following the [Agent Skills](https://agentskills.io) open standard.
+210 iOS/Swift/Xcode agent skills from 28 authors with phase-aware routing.
 
 ## Structure
 
 ```
-skills/<name>/SKILL.md     — Skill instructions (required, <500 lines)
-skills/<name>/references/  — Detailed docs loaded on demand (optional)
-tools/integrations/        — API integration guides (Appeeky, Firebase, etc.)
-tools/REGISTRY.md          — Capability matrix: which skill uses which tool
+.claude-plugin/plugin.json    — Claude Code plugin manifest
+.codex-plugin/plugin.json     — Codex CLI plugin manifest
+hooks/
+  hooks.json                  — SessionStart + PreToolUse hook config
+  inject-router.mjs           — Injects router skill at session start
+  route-skills.mjs            — Pattern-matches files/commands → skills
+skills/
+  _router/SKILL.md            — Meta-skill: phase map, knowledge corrections, decision matrix
+  {author}--{name}/SKILL.md   — Individual skills (210 total)
+  {author}--{name}/references/ — Detailed docs loaded on demand
+skills-index.json             — Routing rules + phase assignments
+sources.json                  — Upstream repo mapping for sync
+sync.sh                       — Pull latest from all upstream repos
+install.sh                    — Install for Claude Code + Codex CLI
 ```
 
-Compatible directories: `.cursor/skills/`, `.agents/skills/`, `.claude/skills/`, `.codex/skills/`
+## How Skills Load
 
-## SKILL.md Format
+1. **Session start**: Router injects with knowledge corrections table + decision matrix
+2. **File edit/read**: Hook matches file patterns → injects 1-3 relevant skills
+3. **Bash command**: Hook matches command patterns → injects relevant skills
+4. **Import detection**: Writing `import HealthKit` → injects dpearson2699--healthkit
+5. **Manual**: Agent reads any skill from `skills/{id}/SKILL.md`
+
+Max 3 skills per injection. 24KB byte budget. Each skill fires once per session (dedup).
+
+## Priority
+
+Paul Hudson (twostraws) skills are primary for all overlapping domains.
+When multiple skills cover the same topic, use the one with highest priority in skills-index.json.
+
+## Skill Format
 
 ```yaml
 ---
-name: skill-name          # Must match directory, lowercase+hyphens, 1-64 chars
-description: ...          # Trigger phrases + scope boundaries, 1-1024 chars
-metadata:
-  version: 1.0.0
+name: skill-name
+description: When to use this skill (1-1024 chars)
 ---
+
+# Skill content (markdown)
 ```
 
-Description drives discovery — agent reads all descriptions to decide which skill to load. Include "When the user wants to...", trigger keywords, and "For X, see Y skill" boundaries.
+## Contributing
 
-## Writing Style
-
-- Direct, actionable, second person
-- Tables for comparisons, numbered lists for steps
-- Bold for key terms, code blocks for examples
-- No filler, no hedging
-
-## App Store Reference
-
-**iOS limits:** Title 30 chars, Subtitle 30 chars, Keyword field 100 chars (comma-separated, no spaces), Description 4000 chars (not indexed for search), Promotional text 170 chars.
-
-**Google Play limits:** Title 30 chars, Short description 80 chars, Full description 4000 chars (indexed for search).
-
-**Key rules:** Title has highest keyword weight. Don't repeat keywords across fields. Use singular forms. Don't include "app" or category names in keyword field.
-
-## Commits
-
-`feat(skill-name): ...` / `fix(skill-name): ...` / `docs: ...`
-
-Branches: `feature/skill-name`, `fix/skill-name-desc`, `docs/desc`
+Each skill directory is prefixed with the source author. To add a skill from a new upstream repo:
+1. Add the repo to `sources.json`
+2. Run `./sync.sh` to pull the SKILL.md files
+3. Add routing rules to `skills-index.json` if needed
+4. Add to the appropriate phase in `skills-index.json`
