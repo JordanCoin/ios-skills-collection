@@ -318,6 +318,15 @@
       }
     },
     {
+      "repo": "adamlyttleapps/claude-skill-aso-appstore-screenshots",
+      "author": "Adam Lyttle",
+      "url": "https://github.com/adamlyttleapps/claude-skill-aso-appstore-screenshots",
+      "license": "MIT",
+      "skills": {
+        "adamlyttleapps--aso-appstore-screenshots": "."
+      }
+    },
+    {
       "repo": "kimsungwhee/apple-docs-mcp",
       "author": "kimsungwhee",
       "url": "https://github.com/kimsungwhee/apple-docs-mcp",
