@@ -19,3 +19,21 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+THIRD-PARTY LICENSES
+
+The plugin infrastructure (hooks, routing, install scripts, router skill) is MIT.
+
+Individual skills retain their original licenses:
+
+- skills/dpearson2699--*/ (76 skills):
+  PolyForm Perimeter License 1.0.0
+  Required Notice: Copyright (c) 2025 dpearson2699 (https://github.com/dpearson2699)
+  Full license: https://polyformproject.org/licenses/perimeter/1.0.0/
+
+- All other skills: MIT License (see each upstream repo for details)
+
+Each skill directory is attributed to its original author via the
+{author}-- prefix. See sources.json for upstream repo links.

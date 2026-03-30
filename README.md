@@ -1,5 +1,13 @@
 # iOS Skills Collection
 
+[![Swift 6.3](https://img.shields.io/badge/Swift-6.3-F05138.svg)](https://swift.org)
+[![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20iPadOS%20%7C%20macOS-000000.svg?logo=apple)](https://developer.apple.com)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-compatible-d97757.svg?logo=anthropic)](https://claude.ai/code)
+[![OpenAI Codex](https://img.shields.io/badge/OpenAI%20Codex-compatible-10A37F.svg)](https://developers.openai.com/codex)
+[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-standard-green.svg)](https://agentskills.io)
+[![Skills](https://img.shields.io/badge/Skills-202-blue.svg)](skills/)
+[![Authors](https://img.shields.io/badge/Authors-28-purple.svg)](sources.json)
+
 The largest collection of iOS/Swift/Xcode AI agent skills. 202 SKILL.md files from 28 authors
 including [Paul Hudson (twostraws)](https://github.com/twostraws), [Antoine van der Lee (AvdLee)](https://github.com/AvdLee),
 [Thomas Ricouard (Dimillian)](https://github.com/Dimillian), and [dpearson2699](https://github.com/dpearson2699).
@@ -170,7 +178,10 @@ All skills are vendored with attribution. Each directory is prefixed with the so
 | **JordanCoin** | [JordanCoin/swift-agent-skills](https://github.com/JordanCoin/swift-agent-skills) | 12 | Swift/SwiftUI/Xcode tooling, Core Data, style guide |
 | **JordanCoin** | [JordanCoin/ios-design-stack](https://github.com/JordanCoin/ios-design-stack) | 3 | Design philosophy, Pencil MCP, Ralph Loop |
 
-All upstream repos are MIT licensed. Source mapping in `sources.json`.
+Source mapping in `sources.json`. Most upstream repos are MIT licensed.
+**Exception:** [dpearson2699/swift-ios-skills](https://github.com/dpearson2699/swift-ios-skills) (76 skills) is licensed under
+[PolyForm Perimeter 1.0.0](https://polyformproject.org/licenses/perimeter/1.0.0/) —
+see their [LICENSE](https://github.com/dpearson2699/swift-ios-skills/blob/main/LICENSE) for terms.
 
 ## License
 
