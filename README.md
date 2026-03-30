@@ -50,13 +50,21 @@ claude plugins install ios-skills@ios-skills-collection
 git clone https://github.com/JordanCoin/ios-skills-collection .ios-skills && claude --plugin-dir .ios-skills
 ```
 
+**Xcode (Claude Agent + Codex):**
+```bash
+(git clone https://github.com/JordanCoin/ios-skills-collection ~/.agents/ios-skills 2>/dev/null || git -C ~/.agents/ios-skills pull) && ~/.agents/ios-skills/install.sh --xcode
+```
+
 | Agent | Install method | What it does |
 |-------|----------------|--------------|
 | Claude Code | `claude plugins marketplace add` + `install` | Registers marketplace, clones to cache, hooks auto-inject skills |
-| Codex CLI | `install.sh --codex` | Symlinks skills to `~/.agents/skills/` |
+| Codex CLI | `install.sh --codex` | Symlinks to `~/.agents/skills/` |
 | Codex Mac App | `install.sh --codex` | Plugin bundle at `~/plugins/ios-skills` + marketplace |
+| Xcode (Claude) | `install.sh --xcode` | Symlinks to `~/Library/Developer/Xcode/CodingAssistant/ClaudeAgentConfig/skills/` |
+| Xcode (Codex) | `install.sh --xcode` | Symlinks to `~/Library/Developer/Xcode/CodingAssistant/codex/skills/` |
 
 Claude Code users don't need to clone the repo or run install.sh — the marketplace handles it.
+Xcode requires a restart after install to pick up skills.
 
 ## How It Works
 
