@@ -1,9 +1,17 @@
 # iOS Skills Collection
 
-202 iOS/Swift/Xcode agent skills aggregated from 28 authors with phase-aware routing.
-Works with Claude Code (plugin + hooks), Codex CLI (raw skills), and Codex Mac App (plugin bundle).
+The largest collection of iOS/Swift/Xcode AI agent skills. 202 SKILL.md files from 28 authors
+including [Paul Hudson (twostraws)](https://github.com/twostraws), [Antoine van der Lee (AvdLee)](https://github.com/AvdLee),
+[Thomas Ricouard (Dimillian)](https://github.com/Dimillian), and [dpearson2699](https://github.com/dpearson2699).
 
-Skills sourced from [twostraws/Swift-Agent-Skills](https://github.com/twostraws/Swift-Agent-Skills) community directory and beyond.
+Phase-aware routing auto-injects the right skills based on what you're editing.
+Works with **Claude Code** (plugin + hooks), **OpenAI Codex CLI**, and **Codex Mac App**.
+
+Covers SwiftUI, Swift Concurrency, SwiftData, UIKit, 76 Apple frameworks (HealthKit, MapKit,
+ARKit, CoreML, StoreKit, etc.), App Store Connect, ASO, Xcode build optimization, accessibility,
+testing, security, and the full idea-to-deploy lifecycle.
+
+Skills sourced from [twostraws/Swift-Agent-Skills](https://github.com/twostraws/Swift-Agent-Skills) community directory and the broader iOS agent skills ecosystem.
 
 ## Install
 
@@ -30,7 +38,7 @@ git clone https://github.com/JordanCoin/ios-skills-collection .ios-skills && cla
 | Agent | What install does |
 |-------|-------------------|
 | Claude Code | Registers as plugin with hooks (auto-inject skills on file edit) |
-| Codex CLI | Symlinks 210 skills to `~/.agents/skills/` (auto-activate on description match) |
+| Codex CLI | Symlinks skills to `~/.agents/skills/` (auto-activate on description match) |
 | Codex Mac App | Plugin bundle at `~/plugins/ios-skills` + marketplace registration |
 
 ## How It Works
