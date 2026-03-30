@@ -1,10 +1,9 @@
-# Xcode Preview Capture Skill
+---
+name: xcode-preview-capture
+description: Build and capture Xcode/SwiftUI previews for visual analysis. Use when you need to see rendered UI output, verify layouts, or inspect visual components.
+---
 
-<skill-definition>
-name: preview
-description: Build and capture Xcode/SwiftUI previews for visual analysis
-invocation: /preview
-</skill-definition>
+# Xcode Preview Capture Skill
 
 ## Overview
 
