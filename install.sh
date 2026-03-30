@@ -2,7 +2,7 @@
 set -e
 
 # iOS Skills Collection — Install for Claude Code + Codex (CLI + Mac App)
-# 202 skills from 28 authors, phase-aware routing
+# 200+ skills from 28 authors, phase-aware routing
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PLUGIN_PATH="$SCRIPT_DIR"

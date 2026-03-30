@@ -4,10 +4,10 @@
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-compatible-d97757.svg?logo=anthropic)](https://claude.ai/code)
 [![OpenAI Codex](https://img.shields.io/badge/OpenAI%20Codex-compatible-10A37F.svg)](https://developers.openai.com/codex)
 [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-standard-green.svg)](https://agentskills.io)
-[![Skills](https://img.shields.io/badge/Skills-202-blue.svg)](skills/)
+[![Skills](https://img.shields.io/badge/Skills-200%2B-blue.svg)](skills/)
 [![Authors](https://img.shields.io/badge/Authors-28-purple.svg)](sources.json)
 
-The largest collection of iOS/Swift/Xcode AI agent skills. 202 SKILL.md files from 28 authors
+The largest collection of iOS/Swift/Xcode AI agent skills. 200+ SKILL.md files from 28 authors
 including [Paul Hudson (twostraws)](https://github.com/twostraws), [Antoine van der Lee (AvdLee)](https://github.com/AvdLee),
 [Thomas Ricouard (Dimillian)](https://github.com/Dimillian), and [dpearson2699](https://github.com/dpearson2699).
 
@@ -83,7 +83,7 @@ A router skill loads at session start with:
 IDEATION → DESIGN → DEVELOP → TEST → DEPLOY → ITERATE
 ```
 
-202 skills organized across 6 phases. The router guides the agent to the right
+200+ skills organized across 6 phases. The router guides the agent to the right
 skills based on what phase you're in. See `skills/_router/SKILL.md` for the full map.
 
 ## Update

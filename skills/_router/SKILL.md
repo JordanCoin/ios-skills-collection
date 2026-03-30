@@ -8,7 +8,7 @@ description: >
 
 # iOS Skills Router
 
-You have access to **202 specialized skills** for iOS/Swift/Xcode development.
+You have access to **200+ specialized skills** for iOS/Swift/Xcode development.
 Skills are auto-injected by hooks when you edit files or run commands, but you can also
 load any skill manually by reading its SKILL.md.
 
