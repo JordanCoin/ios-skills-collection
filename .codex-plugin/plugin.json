@@ -6,11 +6,20 @@
     "name": "JordanCoin",
     "url": "https://github.com/JordanCoin"
   },
+  "homepage": "https://github.com/JordanCoin/ios-skills-collection",
+  "repository": "https://github.com/JordanCoin/ios-skills-collection",
+  "license": "MIT",
+  "keywords": ["ios", "swift", "swiftui", "xcode", "skills", "hooks"],
   "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "iOS Skills Collection",
     "shortDescription": "210 curated iOS/Swift/Xcode skills from 28 authors",
+    "longDescription": "Phase-aware iOS/Swift/Xcode skill bundle with router and hook-based auto-injection. Covers ideation, design, develop, test, deploy, and iterate phases. Skills from twostraws, AvdLee, dpearson2699, Dimillian, and 24 more authors.",
+    "developerName": "JordanCoin",
     "category": "Coding",
-    "capabilities": ["Interactive", "Read"]
+    "capabilities": ["Interactive", "Read"],
+    "websiteURL": "https://github.com/JordanCoin/ios-skills-collection",
+    "defaultPrompt": ["Help me build, test, debug, or ship an iOS app with the right skills auto-routed."]
   }
 }

@@ -231,10 +231,15 @@ do_quick_check() {
   fi
 
   local last_epoch
+  local last_ts=$(cat "$LAST_SYNC_FILE")
   if command -v gdate >/dev/null 2>&1; then
-    last_epoch=$(gdate -d "$(cat "$LAST_SYNC_FILE")" +%s 2>/dev/null || echo 0)
+    last_epoch=$(gdate -d "$last_ts" +%s 2>/dev/null || echo 0)
+  elif date -d "2000-01-01" +%s >/dev/null 2>&1; then
+    # GNU date
+    last_epoch=$(date -d "$last_ts" +%s 2>/dev/null || echo 0)
   else
-    last_epoch=$(date -j -f "%Y-%m-%dT%H:%M:%SZ" "$(cat "$LAST_SYNC_FILE")" +%s 2>/dev/null || echo 0)
+    # BSD date (macOS)
+    last_epoch=$(date -j -f "%Y-%m-%dT%H:%M:%SZ" "$last_ts" +%s 2>/dev/null || echo 0)
   fi
 
   local now_epoch=$(date +%s)
@@ -248,11 +253,9 @@ do_quick_check() {
 }
 
 # ── Parse args ───────────────────────────────────────────────────
-check_deps
-
 case "${1:-}" in
-  --check|-c)     do_check ;;
-  --status|-s)    do_status ;;
+  --check|-c)     check_deps; do_check ;;
+  --status|-s)    check_deps; do_status ;;
   --quick-check)  do_quick_check ;;
   --help|-h)
     echo "Usage: ./sync.sh [option]"
@@ -263,5 +266,5 @@ case "${1:-}" in
     echo "  --quick-check   One-word status for hook scripts (OK/STALE/NEEDS_SYNC)"
     echo "  --help, -h      Show this help"
     ;;
-  *)              do_sync ;;
+  *)              check_deps; do_sync ;;
 esac
