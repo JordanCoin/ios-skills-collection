@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "repo": "twostraws/SwiftUI-Agent-Skill",
+      "author": "Paul Hudson",
+      "url": "https://github.com/twostraws/SwiftUI-Agent-Skill",
+      "license": "MIT",
+      "skills": {
+        "twostraws--swiftui-pro": "swiftui-pro"
+      }
+    },
+    {
+      "repo": "twostraws/Swift-Concurrency-Agent-Skill",
+      "author": "Paul Hudson",
+      "url": "https://github.com/twostraws/Swift-Concurrency-Agent-Skill",
+      "license": "MIT",
+      "skills": {
+        "twostraws--swift-concurrency-pro": "swift-concurrency-pro"
+      }
+    },
+    {
+      "repo": "twostraws/SwiftData-Agent-Skill",
+      "author": "Paul Hudson",
+      "url": "https://github.com/twostraws/SwiftData-Agent-Skill",
+      "license": "MIT",
+      "skills": {
+        "twostraws--swiftdata-pro": "swiftdata-pro"
+      }
+    },
+    {
+      "repo": "AvdLee/SwiftUI-Agent-Skill",
+      "author": "Antoine van der Lee",
+      "url": "https://github.com/AvdLee/SwiftUI-Agent-Skill",
+      "license": "MIT",
+      "skills": {
+        "avdlee--swiftui-expert": "swiftui-expert-skill",
+        "avdlee--update-swiftui-apis": ".agents/skills/update-swiftui-apis"
+      }
+    },
+    {
+      "repo": "AvdLee/Swift-Testing-Agent-Skill",
+      "author": "Antoine van der Lee",
+      "url": "https://github.com/AvdLee/Swift-Testing-Agent-Skill",
+      "license": "MIT",
+      "skills": {
+        "avdlee--swift-testing-expert": "swift-testing-expert"
+      }
+    },
+    {
+      "repo": "AvdLee/Xcode-Build-Optimization-Agent-Skill",
+      "author": "Antoine van der Lee",
+      "url": "https://github.com/AvdLee/Xcode-Build-Optimization-Agent-Skill",
+      "license": "MIT",
+      "skills": {
+        "avdlee--spm-build-analysis": "skills/spm-build-analysis",
+        "avdlee--xcode-build-benchmark": "skills/xcode-build-benchmark",
+        "avdlee--xcode-build-fixer": "skills/xcode-build-fixer",
+        "avdlee--xcode-build-orchestrator": "skills/xcode-build-orchestrator",
+        "avdlee--xcode-compilation-analyzer": "skills/xcode-compilation-analyzer",
+        "avdlee--xcode-project-analyzer": "skills/xcode-project-analyzer"
+      }
+    },
+    {
+      "repo": "dpearson2699/swift-ios-skills",
+      "author": "dpearson2699",
+      "url": "https://github.com/dpearson2699/swift-ios-skills",
+      "license": "MIT",
+      "prefix": "dpearson2699--",
+      "skillsDir": "skills"
+    },
+    {
+      "repo": "truongduy2611/app-store-preflight-skills",
+      "author": "truongduy2611",
+      "url": "https://github.com/truongduy2611/app-store-preflight-skills",
+      "license": "MIT",
+      "skills": {
+        "truongduy2611--app-store-preflight": "."
+      }
+    },
+    {
+      "repo": "dadederk/iOS-Accessibility-Agent-Skill",
+      "author": "dadederk",
+      "url": "https://github.com/dadederk/iOS-Accessibility-Agent-Skill",
+      "license": "MIT",
+      "skills": {
+        "dadederk--ios-accessibility": "ios-accessibility"
+      }
+    },
+    {
+      "repo": "PasqualeVittoriosi/swift-accessibility-skill",
+      "author": "Pasquale Vittoriosi",
+      "url": "https://github.com/PasqualeVittoriosi/swift-accessibility-skill",
+      "license": "MIT",
+      "skills": {
+        "pasqualevittoriosi--swift-accessibility": "swift-accessibility-skill"
+      }
+    },
+    {
+      "repo": "harryworld/Xcode26-Agent-Skills",
+      "author": "harryworld",
+      "url": "https://github.com/harryworld/Xcode26-Agent-Skills",
+      "license": "MIT",
+      "skills": {
+        "harryworld--xcode-26": "xcode-26"
+      }
+    },
+    {
+      "repo": "rudrankriyam/app-store-connect-cli-skills",
+      "author": "Rudrank Riyam",
+      "url": "https://github.com/rudrankriyam/app-store-connect-cli-skills",
+      "license": "MIT",
+      "prefix": "rudrankriyam--",
+      "skillsDir": "skills"
+    },
+    {
+      "repo": "Eronred/aso-skills",
+      "author": "Eronred",
+      "url": "https://github.com/Eronred/aso-skills",
+      "license": "MIT",
+      "prefix": "eronred--",
+      "skillsDir": "skills"
+    },
+    {
+      "repo": "arimunandar/claude-code-ios-plugin",
+      "author": "arimunandar",
+      "url": "https://github.com/arimunandar/claude-code-ios-plugin",
+      "license": "MIT",
+      "prefix": "arimunandar--",
+      "skillsDir": "skills"
+    },
+    {
+      "repo": "JordanCoin/swift-agent-skills",
+      "author": "JordanCoin",
+      "url": "https://github.com/JordanCoin/swift-agent-skills",
+      "license": "MIT",
+      "prefix": "jordancoin--",
+      "skillsDir": "skills"
+    },
+    {
+      "repo": "JordanCoin/ios-design-stack",
+      "author": "JordanCoin",
+      "url": "https://github.com/JordanCoin/ios-design-stack",
+      "license": "MIT",
+      "skills": {
+        "jordancoin--design-philosophy": "skills/design-philosophy",
+        "jordancoin--pencil-mcp": "skills/pencil-mcp",
+        "jordancoin--ralph-loop": "skills/ralph-loop"
+      }
+    }
+  ]
+}
