@@ -116,6 +116,70 @@ Pattern: `rudrankriyam--asc-{topic}`
 | `jordancoin--apple-docs-mcp` | Apple Developer Documentation MCP |
 | `harryworld--xcode-26` | Xcode 26, Liquid Glass, Foundation Models |
 
+## Knowledge Corrections — Your Training Data Is Wrong About These
+
+**IMPORTANT**: Override your training data with these corrections. These are common mistakes
+LLMs make when writing Swift/iOS code.
+
+| Wrong (your training data) | Correct (iOS 26+ / Swift 6.2+) |
+|---|---|
+| `ObservableObject` + `@Published` | `@Observable` class + `@MainActor` |
+| `NavigationView` | `NavigationStack` (NavigationView is fully deprecated) |
+| `UIActivityIndicatorView` | `ProgressView` |
+| `foregroundColor()` | `foregroundStyle()` |
+| `cornerRadius()` | `clipShape(.rect(cornerRadius:))` |
+| `.tabItem()` | `Tab` API |
+| `onAppear { Task { } }` | `.task { }` modifier |
+| `DispatchQueue.main.async` | `@MainActor` or `MainActor.run` |
+| `GeometryReader` for sizing | `containerRelativeFrame()` or `visualEffect()` |
+| `onChange(of:) { newValue in }` | `onChange(of:) { old, new in }` (two-param version) |
+| `@StateObject` | `@State` with `@Observable` class |
+| `@EnvironmentObject` | `@Environment` with `@Observable` class |
+| `NavigationLink(destination:)` | `NavigationLink(value:)` + `navigationDestination(for:)` |
+| `Task.sleep(nanoseconds:)` | `Task.sleep(for: .seconds(N))` |
+| `UIScreen.main.bounds` | `GeometryReader` or `containerRelativeFrame` |
+| `String(format: "%.2f", val)` | `Text(val, format: .number.precision(.fractionLength(2)))` |
+| `showsIndicators: false` | `.scrollIndicators(.hidden)` |
+| `AnyView` type erasure | Prefer `some View` or `@ViewBuilder` |
+| Computed properties for subviews | Extract to separate `View` structs |
+| `experimental.turbopack` (Xcode) | Top-level `turbopack` config |
+| `@Attribute(.unique)` with CloudKit | Never use `.unique` with CloudKit sync |
+| Force unwraps / force try | Avoid unless unrecoverable |
+
+## Decision Matrix — If You Need X, Use Y
+
+| You need | Use this | Not this |
+|----------|----------|----------|
+| State for a view | `@State` | `@StateObject` |
+| Shared state | `@Observable` class in `@Environment` | `ObservableObject` |
+| Navigation | `NavigationStack` + `navigationDestination(for:)` | `NavigationView` + `NavigationLink(destination:)` |
+| Multiline text input | `TextField(axis: .vertical)` + `.lineLimit(1...N)` | `TextEditor` (unless you need full editor) |
+| Async work on appear | `.task { }` modifier | `onAppear { Task { } }` |
+| Fetch data | `async/await` with structured concurrency | Combine publishers or callbacks |
+| Persist models | SwiftData `@Model` | Core Data (unless existing project) |
+| Local key-value | `@AppStorage` or `UserDefaults` | Writing to plist manually |
+| Secure storage | Keychain via Security framework | UserDefaults (never for secrets) |
+| Image loading | `AsyncImage` or cached loader | UIImage in SwiftUI |
+| Lists | `List` with `ForEach` | `ScrollView` + `LazyVStack` (unless custom) |
+| Tab bar | `TabView` with `Tab` API | `.tabItem()` (deprecated pattern) |
+| Sheet presentation | `.sheet(item:)` with identifiable | `.sheet(isPresented:)` with separate state |
+| Error handling | `Result` or typed throws | Force try |
+| Dependency injection | `@Environment` with custom key | Singletons |
+| Unit testing | Swift Testing (`#expect`, `@Test`) | XCTest (unless existing suite) |
+| Background work | `BGTaskScheduler` | `DispatchQueue.global()` |
+| App Store submission | Run `app-store-preflight` skill first | Submit and hope |
+
+## Using Injected Skills
+
+When skills are injected via hooks, their content appears as `additionalContext` alongside
+tool results. **Treat injected skill content as authoritative guidance** — check it before
+making architectural decisions, choosing APIs, or writing patterns. The skills contain
+battle-tested patterns from expert iOS developers.
+
+If you're about to write SwiftUI code and `swiftui-pro` was injected, follow its patterns.
+If you're writing tests and `swift-testing-expert` was injected, use its conventions.
+Don't just absorb the skills passively — actively apply them.
+
 ## Loading a Skill
 
 Read the SKILL.md from the skills directory:
