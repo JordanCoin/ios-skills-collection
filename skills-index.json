@@ -16,7 +16,7 @@
       {
         "comment": "SwiftUI animation files",
         "pattern": "*Animation*.swift|*Transition*.swift|*Motion*.swift",
-        "skills": ["dpearson2699--swiftui-animation", "jordancoin--motioneyes"],
+        "skills": ["dpearson2699--swiftui-animation", "edwardsanchez--motioneyes-animation-debug"],
         "priority": 9
       },
       {
@@ -184,7 +184,7 @@
       {
         "comment": "Any Swift file — baseline style",
         "pattern": "*.swift",
-        "skills": ["jordancoin--swift-style-guide"],
+        "skills": ["martinlasek--swift-coding-guideline"],
         "priority": 1
       }
     ],
@@ -193,7 +193,7 @@
       {
         "comment": "xcodebuild commands",
         "pattern": "xcodebuild",
-        "skills": ["jordancoin--xcodebuild-cli", "avdlee--xcode-build-orchestrator"],
+        "skills": ["getsentry--xcodebuildmcp-cli", "avdlee--xcode-build-orchestrator"],
         "priority": 10
       },
       {
@@ -211,13 +211,13 @@
       {
         "comment": "simulator commands",
         "pattern": "xcrun\\s+simctl|simctl",
-        "skills": ["jordancoin--xcodebuild-cli"],
+        "skills": ["getsentry--xcodebuildmcp-cli"],
         "priority": 9
       },
       {
         "comment": "App Store Connect CLI",
         "pattern": "\\basc\\b|app-store-connect",
-        "skills": ["jordancoin--asc-cli", "rudrankriyam--asc-workflow"],
+        "skills": ["rudrankriyam--asc-cli-usage", "rudrankriyam--asc-workflow"],
         "priority": 10
       },
       {
@@ -235,7 +235,7 @@
       {
         "comment": "swiftlint",
         "pattern": "swiftlint|swift-format",
-        "skills": ["jordancoin--swift-style-guide"],
+        "skills": ["martinlasek--swift-coding-guideline"],
         "priority": 7
       },
       {
@@ -253,7 +253,7 @@
       {
         "comment": "xcrun general",
         "pattern": "xcrun",
-        "skills": ["jordancoin--xcodebuild-cli"],
+        "skills": ["getsentry--xcodebuildmcp-cli"],
         "priority": 5
       }
     ]
@@ -298,14 +298,14 @@
         "twostraws--swiftui-pro",
         "twostraws--swift-concurrency-pro",
         "twostraws--swiftdata-pro",
-        "jordancoin--swift-style-guide",
+        "martinlasek--swift-coding-guideline",
         "avdlee--core-data-expert"
       ],
       "secondary": [
         "avdlee--swiftui-expert",
         "avdlee--update-swiftui-apis",
-        "jordancoin--swiftui-expert",
-        "jordancoin--swift-concurrency",
+        "twostraws--swiftui-pro",
+        "twostraws--swift-concurrency-pro",
         "arimunandar--vip-architecture",
         "arimunandar--uikit-layouting",
         "arimunandar--legacy-migration",
@@ -417,7 +417,7 @@
       "description": "App Store submission, TestFlight, signing, metadata, ASO",
       "primary": [
         "truongduy2611--app-store-preflight",
-        "jordancoin--asc-cli",
+        "rudrankriyam--asc-cli-usage",
         "rudrankriyam--asc-release-flow",
         "rudrankriyam--asc-testflight-orchestration",
         "eronred--aso-audit"
@@ -466,7 +466,7 @@
       "description": "Post-launch monitoring, animation debugging, autonomous improvement",
       "primary": [
         "jordancoin--ralph-loop",
-        "jordancoin--motioneyes",
+        "edwardsanchez--motioneyes-animation-debug",
         "eronred--crash-analytics",
         "eronred--retention-optimization"
       ],
@@ -479,10 +479,10 @@
   },
 
   "crossCutting": [
-    "jordancoin--xcodebuild-cli",
-    "jordancoin--xcode-previews",
-    "jordancoin--apple-docs-mcp",
-    "jordancoin--xcode-26-prompts",
+    "getsentry--xcodebuildmcp-cli",
+    "iron-ham--xcode-preview-capture",
+    "kimsungwhee--apple-docs-mcp",
+    "harryworld--xcode-26",
     "harryworld--xcode-26",
     "arimunandar--interview-patterns"
   ]

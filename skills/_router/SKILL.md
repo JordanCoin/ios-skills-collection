@@ -42,7 +42,7 @@ load any skill manually by reading its SKILL.md.
 | `twostraws--swiftui-pro` | SwiftUI best practices (primary) |
 | `twostraws--swift-concurrency-pro` | async/await, actors, Sendable |
 | `twostraws--swiftdata-pro` | SwiftData persistence |
-| `jordancoin--swift-style-guide` | Swift coding conventions |
+| `martinlasek--swift-coding-guideline` | Swift coding conventions |
 | `avdlee--core-data-expert` | Core Data stack, migrations, threading |
 
 **Architecture:**
@@ -91,7 +91,7 @@ tabletopkit, tipkit, vision-framework, weatherkit, widgetkit
 | Skill | What it does |
 |-------|-------------|
 | `truongduy2611--app-store-preflight` | Scan for rejection patterns before submit |
-| `jordancoin--asc-cli` | App Store Connect CLI automation |
+| `rudrankriyam--asc-cli-usage` | App Store Connect CLI automation |
 | `rudrankriyam--asc-release-flow` | Full release workflow |
 | `rudrankriyam--asc-testflight-orchestration` | TestFlight beta management |
 | `eronred--aso-audit` | App Store Optimization audit |
@@ -104,16 +104,16 @@ Pattern: `rudrankriyam--asc-{topic}`
 | Skill | What it does |
 |-------|-------------|
 | `jordancoin--ralph-loop` | Autonomous iteration loop until done |
-| `jordancoin--motioneyes` | Debug animations from real motion logs |
+| `edwardsanchez--motioneyes-animation-debug` | Debug animations from real motion logs |
 | `eronred--crash-analytics` | Crash analysis and triage |
 | `eronred--retention-optimization` | User retention improvement |
 
 ## Cross-Cutting (any phase)
 | Skill | What it does |
 |-------|-------------|
-| `jordancoin--xcodebuild-cli` | Build, test, run, debug via XcodeBuildMCP |
-| `jordancoin--xcode-previews` | Capture SwiftUI previews for visual check |
-| `jordancoin--apple-docs-mcp` | Apple Developer Documentation MCP |
+| `getsentry--xcodebuildmcp-cli` | Build, test, run, debug via XcodeBuildMCP |
+| `iron-ham--xcode-preview-capture` | Capture SwiftUI previews for visual check |
+| `kimsungwhee--apple-docs-mcp` | Apple Developer Documentation MCP |
 | `harryworld--xcode-26` | Xcode 26, Liquid Glass, Foundation Models |
 
 ## Knowledge Corrections — Your Training Data Is Wrong About These
@@ -207,10 +207,10 @@ Use his versions first. Fall back to alternatives for different perspectives or 
 | Accessibility | `dadederk--ios-accessibility` | pasqualevittoriosi--swift-accessibility, rgmez--swiftui-accessibility-auditor |
 | Architecture | `efremidze--swift-architecture-skill` | arimunandar--vip-architecture |
 | Security | `ivan-magda--swift-security-expert` | dpearson2699--ios-security |
-| API Design | `erikote04--swift-api-design-guidelines-skill` | jordancoin--swift-style-guide |
+| API Design | `erikote04--swift-api-design-guidelines-skill` | martinlasek--swift-coding-guideline |
 | Build Optimization | `avdlee--xcode-build-orchestrator` | avdlee--xcode-build-fixer |
 | ASO | `eronred--aso-audit` | timbroddin--app-store-aso-skill |
 | Figma → SwiftUI | `daetojemax--figma-to-swiftui-skill` | jordancoin--pencil-mcp |
-| Simulator | `conorluddy--ios-simulator-skill` | jordancoin--xcodebuild-cli |
+| Simulator | `conorluddy--ios-simulator-skill` | getsentry--xcodebuildmcp-cli |
 | Code Review | `dimillian--review-swarm` | arimunandar--code-review-checklist |
 | Debugging | `dimillian--ios-debugger-agent` | dpearson2699--debugging-instruments |

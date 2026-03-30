@@ -268,14 +268,6 @@
       "skillsDir": "skills"
     },
     {
-      "repo": "JordanCoin/swift-agent-skills",
-      "author": "JordanCoin",
-      "url": "https://github.com/JordanCoin/swift-agent-skills",
-      "license": "MIT",
-      "prefix": "jordancoin--",
-      "skillsDir": "skills"
-    },
-    {
       "repo": "JordanCoin/ios-design-stack",
       "author": "JordanCoin",
       "url": "https://github.com/JordanCoin/ios-design-stack",
