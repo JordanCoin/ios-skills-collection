@@ -13,6 +13,13 @@ testing, security, and the full idea-to-deploy lifecycle.
 
 Skills sourced from [twostraws/Swift-Agent-Skills](https://github.com/twostraws/Swift-Agent-Skills) community directory and the broader iOS agent skills ecosystem.
 
+> **Before you install:** Agent skills are injected directly into your AI assistant's
+> context window and influence how it writes code. Review any skill before trusting it.
+> Every skill in this collection links to its upstream source repo in the
+> [Sources](#sources) section below — verify the authors and read the SKILL.md files
+> you plan to use. Being included here is not an endorsement. All skills are open source
+> (MIT licensed) and can be audited. Use at your own discretion.
+
 ## Install
 
 **Everything (recommended):**
