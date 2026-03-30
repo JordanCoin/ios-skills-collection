@@ -1,0 +1,16 @@
+{
+  "name": "ios-skills-collection",
+  "owner": {
+    "name": "JordanCoin"
+  },
+  "metadata": {
+    "description": "200+ iOS/Swift/Xcode agent skills from 28 authors with phase-aware routing. Full lifecycle: ideation → design → develop → test → deploy → iterate."
+  },
+  "plugins": [
+    {
+      "name": "ios-skills",
+      "source": "./",
+      "description": "200+ iOS/Swift/Xcode agent skills with phase-aware routing hooks. Auto-injects the right skills based on what you're editing."
+    }
+  ]
+}

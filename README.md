@@ -29,22 +29,23 @@ Skills sourced from [twostraws/Swift-Agent-Skills](https://github.com/twostraws/
 
 ## Install
 
-**Everything (recommended):**
+**Claude Code (recommended):**
 ```bash
-git clone https://github.com/JordanCoin/ios-skills-collection ~/.agents/ios-skills && ~/.agents/ios-skills/install.sh --all
+claude plugins marketplace add https://github.com/JordanCoin/ios-skills-collection
+claude plugins install ios-skills@ios-skills-collection
 ```
 
-**Claude Code only:**
-```bash
-git clone https://github.com/JordanCoin/ios-skills-collection ~/.claude/ios-skills && claude plugins add ~/.claude/ios-skills
-```
-
-**Codex only (CLI + Mac App):**
+**Codex (CLI + Mac App):**
 ```bash
 git clone https://github.com/JordanCoin/ios-skills-collection ~/.agents/ios-skills && ~/.agents/ios-skills/install.sh --codex
 ```
 
-**Per-project:**
+**Everything (Claude + Codex):**
+```bash
+git clone https://github.com/JordanCoin/ios-skills-collection ~/.agents/ios-skills && ~/.agents/ios-skills/install.sh --all
+```
+
+**Per-project (one session):**
 ```bash
 git clone https://github.com/JordanCoin/ios-skills-collection .ios-skills && claude --plugin-dir .ios-skills
 ```

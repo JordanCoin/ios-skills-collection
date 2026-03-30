@@ -23,11 +23,25 @@ install_claude() {
 
   echo -e "${B}Claude Code:${N}"
   if [ $HAS_CLAUDE -eq 1 ]; then
-    echo -e "  ${G}✓${N} Plugin ready at: $PLUGIN_PATH"
-    echo ""
-    echo -e "  ${Y}To use:${N}"
-    echo -e "    ${D}Dev/test (one session):${N}  claude --plugin-dir \"$PLUGIN_PATH\""
-    echo -e "    ${D}Permanent:${N}              claude plugins add \"$PLUGIN_PATH\""
+    # Check if marketplace already added
+    if claude plugins marketplace list 2>/dev/null | grep -q "ios-skills-collection" 2>/dev/null; then
+      echo -e "  ${D}Marketplace already added${N}"
+    else
+      echo -e "  Adding marketplace..."
+      claude plugins marketplace add "https://github.com/JordanCoin/ios-skills-collection" 2>/dev/null && \
+        echo -e "  ${G}✓${N} Marketplace added" || \
+        echo -e "  ${Y}!${N} Marketplace add failed — try manually: claude plugins marketplace add https://github.com/JordanCoin/ios-skills-collection"
+    fi
+
+    # Check if plugin already installed
+    if claude plugins list 2>/dev/null | grep -q "ios-skills" 2>/dev/null; then
+      echo -e "  ${G}✓${N} Plugin already installed"
+    else
+      echo -e "  Installing plugin..."
+      claude plugins install "ios-skills@ios-skills-collection" 2>/dev/null && \
+        echo -e "  ${G}✓${N} Plugin installed" || \
+        echo -e "  ${Y}!${N} Install failed — try manually: claude plugins install ios-skills@ios-skills-collection"
+    fi
     echo ""
   else
     echo -e "  ${D}Claude Code not found. Install from https://claude.ai/code${N}"
