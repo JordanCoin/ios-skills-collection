@@ -156,6 +156,46 @@
       "skills": {
         "iron-ham--xcode-preview-capture": "skills/preview"
       }
+    },
+    {
+      "repo": "edwardsanchez/MotionEyes",
+      "author": "Edward Sanchez",
+      "url": "https://github.com/edwardsanchez/MotionEyes",
+      "license": "MIT",
+      "skills": {
+        "edwardsanchez--motioneyes-animation-debug": "skill/motioneyes-animation-debug",
+        "edwardsanchez--motioneyes-visual-analysis": "skill/motioneyes-visual-analysis"
+      }
+    },
+    {
+      "repo": "martinlasek/skills",
+      "author": "Martin Lasek",
+      "url": "https://github.com/martinlasek/skills",
+      "license": "MIT",
+      "skills": {
+        "martinlasek--swift-coding-guideline": "swift-coding-guideline",
+        "martinlasek--swiftui-coding-guideline": "swiftui-coding-guideline"
+      }
+    },
+    {
+      "repo": "getsentry/XcodeBuildMCP",
+      "author": "Sentry (getsentry)",
+      "url": "https://github.com/getsentry/XcodeBuildMCP",
+      "license": "MIT",
+      "skills": {
+        "getsentry--xcodebuildmcp-cli": "skills/xcodebuildmcp-cli",
+        "getsentry--xcodebuildmcp": "skills/xcodebuildmcp"
+      }
+    },
+    {
+      "repo": "kimsungwhee/apple-docs-mcp",
+      "author": "kimsungwhee",
+      "url": "https://github.com/kimsungwhee/apple-docs-mcp",
+      "license": "MIT",
+      "skills": {
+        "kimsungwhee--apple-docs-mcp": "."
+      },
+      "note": "SKILL.md authored by JordanCoin from upstream README (MCP server, not a skill repo)"
     }
   ]
 }
