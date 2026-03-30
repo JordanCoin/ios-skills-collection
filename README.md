@@ -1,6 +1,6 @@
 # iOS Skills Collection
 
-204 iOS/Swift/Xcode agent skills aggregated from 23 authors with phase-aware routing.
+210 iOS/Swift/Xcode agent skills aggregated from 28 authors with phase-aware routing.
 Works with Claude Code (plugin + hooks) and Codex CLI (raw skills).
 
 Skills sourced from [twostraws/Swift-Agent-Skills](https://github.com/twostraws/Swift-Agent-Skills) community directory and beyond.

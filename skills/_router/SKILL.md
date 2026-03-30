@@ -3,12 +3,12 @@ name: ios-skills-router
 description: >
   Always use when working on any iOS, macOS, Swift, SwiftUI, Xcode, or Apple platform project.
   Routes to the correct specialized skills based on development phase and task context.
-  This collection contains 200+ skills from 20+ authors covering the full iOS lifecycle.
+  This collection contains 210 skills from 28 authors covering the full iOS lifecycle.
 ---
 
 # iOS Skills Router
 
-You have access to **200+ specialized skills** for iOS/Swift/Xcode development.
+You have access to **210 specialized skills** for iOS/Swift/Xcode development.
 Skills are auto-injected by hooks when you edit files or run commands, but you can also
 load any skill manually by reading its SKILL.md.
 
@@ -43,7 +43,7 @@ load any skill manually by reading its SKILL.md.
 | `twostraws--swift-concurrency-pro` | async/await, actors, Sendable |
 | `twostraws--swiftdata-pro` | SwiftData persistence |
 | `jordancoin--swift-style-guide` | Swift coding conventions |
-| `jordancoin--core-data` | Core Data stack, migrations, threading |
+| `avdlee--core-data-expert` | Core Data stack, migrations, threading |
 
 **Architecture:**
 | Skill | What it does |
@@ -203,7 +203,7 @@ Use his versions first. Fall back to alternatives for different perspectives or 
 | Concurrency | `twostraws--swift-concurrency-pro` | dimillian--swift-concurrency-expert, avdlee--swift-concurrency |
 | Testing | `twostraws--swift-testing-pro` | avdlee--swift-testing-expert, bocato--swift-testing |
 | SwiftData | `twostraws--swiftdata-pro` | vanab--swiftdata-expert-skill |
-| Core Data | `avdlee--core-data-expert` | jordancoin--core-data |
+| Core Data | `avdlee--core-data-expert` | — |
 | Accessibility | `dadederk--ios-accessibility` | pasqualevittoriosi--swift-accessibility, rgmez--swiftui-accessibility-auditor |
 | Architecture | `efremidze--swift-architecture-skill` | arimunandar--vip-architecture |
 | Security | `ivan-magda--swift-security-expert` | dpearson2699--ios-security |

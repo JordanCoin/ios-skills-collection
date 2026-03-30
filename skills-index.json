@@ -34,7 +34,7 @@
       {
         "comment": "SwiftData / Core Data models",
         "pattern": "*Model.swift|*Entity.swift|*.xcdatamodeld*|*Schema*.swift|*Migration*.swift",
-        "skills": ["twostraws--swiftdata-pro", "jordancoin--core-data"],
+        "skills": ["twostraws--swiftdata-pro", "avdlee--core-data-expert"],
         "priority": 10
       },
       {
@@ -299,7 +299,7 @@
         "twostraws--swift-concurrency-pro",
         "twostraws--swiftdata-pro",
         "jordancoin--swift-style-guide",
-        "jordancoin--core-data"
+        "avdlee--core-data-expert"
       ],
       "secondary": [
         "avdlee--swiftui-expert",
@@ -401,7 +401,7 @@
         "dpearson2699--debugging-instruments"
       ],
       "secondary": [
-        "jordancoin--swift-testing",
+        "twostraws--swift-testing-pro",
         "avdlee--xcode-compilation-analyzer",
         "avdlee--xcode-project-analyzer",
         "avdlee--xcode-build-fixer",
@@ -484,7 +484,6 @@
     "jordancoin--apple-docs-mcp",
     "jordancoin--xcode-26-prompts",
     "harryworld--xcode-26",
-    "jordancoin--agents-template",
     "arimunandar--interview-patterns"
   ]
 }

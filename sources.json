@@ -20,6 +20,15 @@
       }
     },
     {
+      "repo": "twostraws/Swift-Testing-Agent-Skill",
+      "author": "Paul Hudson",
+      "url": "https://github.com/twostraws/Swift-Testing-Agent-Skill",
+      "license": "MIT",
+      "skills": {
+        "twostraws--swift-testing-pro": "swift-testing-pro"
+      }
+    },
+    {
       "repo": "twostraws/SwiftData-Agent-Skill",
       "author": "Paul Hudson",
       "url": "https://github.com/twostraws/SwiftData-Agent-Skill",
@@ -59,6 +68,135 @@
         "avdlee--xcode-build-orchestrator": "skills/xcode-build-orchestrator",
         "avdlee--xcode-compilation-analyzer": "skills/xcode-compilation-analyzer",
         "avdlee--xcode-project-analyzer": "skills/xcode-project-analyzer"
+      }
+    },
+    {
+      "repo": "AvdLee/Swift-Concurrency-Agent-Skill",
+      "author": "Antoine van der Lee",
+      "url": "https://github.com/AvdLee/Swift-Concurrency-Agent-Skill",
+      "license": "MIT",
+      "skills": {
+        "avdlee--swift-concurrency": "swift-concurrency-expert"
+      }
+    },
+    {
+      "repo": "AvdLee/Core-Data-Agent-Skill",
+      "author": "Antoine van der Lee",
+      "url": "https://github.com/AvdLee/Core-Data-Agent-Skill",
+      "license": "MIT",
+      "skills": {
+        "avdlee--core-data-expert": "core-data-expert"
+      }
+    },
+    {
+      "repo": "Dimillian/Skills",
+      "author": "Thomas Ricouard",
+      "url": "https://github.com/Dimillian/Skills",
+      "license": "MIT",
+      "prefix": "dimillian--",
+      "skillsDir": "skills"
+    },
+    {
+      "repo": "bocato/swift-testing-agent-skill",
+      "author": "Eduardo Bocato",
+      "url": "https://github.com/bocato/swift-testing-agent-skill",
+      "license": "MIT",
+      "skills": {
+        "bocato--swift-testing": "swift-testing"
+      }
+    },
+    {
+      "repo": "efremidze/swift-architecture-skill",
+      "author": "Lasha Efremidze",
+      "url": "https://github.com/efremidze/swift-architecture-skill",
+      "license": "MIT",
+      "skills": {
+        "efremidze--swift-architecture-skill": "swift-architecture-skill"
+      }
+    },
+    {
+      "repo": "Erikote04/Swift-API-Design-Guidelines-Agent-Skill",
+      "author": "Erik Sebastian de Erice",
+      "url": "https://github.com/Erikote04/Swift-API-Design-Guidelines-Agent-Skill",
+      "license": "MIT",
+      "skills": {
+        "erikote04--swift-api-design-guidelines-skill": "swift-api-design-guidelines-skill"
+      }
+    },
+    {
+      "repo": "ivan-magda/swift-security-skill",
+      "author": "Ivan Magda",
+      "url": "https://github.com/ivan-magda/swift-security-skill",
+      "license": "MIT",
+      "skills": {
+        "ivan-magda--swift-security-expert": "swift-security-expert"
+      }
+    },
+    {
+      "repo": "rgmez/apple-accessibility-skills",
+      "author": "Roberto Gomez Munoz",
+      "url": "https://github.com/rgmez/apple-accessibility-skills",
+      "license": "MIT",
+      "skills": {
+        "rgmez--appkit-accessibility-auditor": "appkit-accessibility-auditor",
+        "rgmez--swiftui-accessibility-auditor": "swiftui-accessibility-auditor",
+        "rgmez--uikit-accessibility-auditor": "uikit-accessibility-auditor"
+      }
+    },
+    {
+      "repo": "conorluddy/ios-simulator-skill",
+      "author": "conorluddy",
+      "url": "https://github.com/conorluddy/ios-simulator-skill",
+      "license": "MIT",
+      "skills": {
+        "conorluddy--ios-simulator-skill": "."
+      }
+    },
+    {
+      "repo": "vanab/swiftdata-agent-skill",
+      "author": "Kudrin Dmitry",
+      "url": "https://github.com/vanab/swiftdata-agent-skill",
+      "license": "MIT",
+      "skills": {
+        "vanab--swiftdata-expert-skill": "swiftdata-expert-skill"
+      }
+    },
+    {
+      "repo": "timbroddin/app-store-aso-skill",
+      "author": "Tim Broddin",
+      "url": "https://github.com/timbroddin/app-store-aso-skill",
+      "license": "MIT",
+      "skills": {
+        "timbroddin--app-store-aso-skill": "app-store-aso-skill"
+      }
+    },
+    {
+      "repo": "daetojemax/figma-to-swiftui-skill",
+      "author": "daetojemax",
+      "url": "https://github.com/daetojemax/figma-to-swiftui-skill",
+      "license": "MIT",
+      "skills": {
+        "daetojemax--figma-to-swiftui-skill": "figma-to-swiftui-skill"
+      }
+    },
+    {
+      "repo": "andrewgleave/skills",
+      "author": "andrewgleave",
+      "url": "https://github.com/andrewgleave/skills",
+      "license": "MIT",
+      "skills": {
+        "andrewgleave--cleanse": "cleanse",
+        "andrewgleave--critical-reasoning": "critical-reasoning",
+        "andrewgleave--writing-for-interfaces": "writing-for-interfaces"
+      }
+    },
+    {
+      "repo": "arjitj2/swiftui-design-principles",
+      "author": "Arjit Jaiswal",
+      "url": "https://github.com/arjitj2/swiftui-design-principles",
+      "license": "MIT",
+      "skills": {
+        "arjitj2--swiftui-design-principles": "."
       }
     },
     {
