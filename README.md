@@ -50,11 +50,13 @@ git clone https://github.com/JordanCoin/ios-skills-collection ~/.agents/ios-skil
 git clone https://github.com/JordanCoin/ios-skills-collection .ios-skills && claude --plugin-dir .ios-skills
 ```
 
-| Agent | What install does |
-|-------|-------------------|
-| Claude Code | Registers as plugin with hooks (auto-inject skills on file edit) |
-| Codex CLI | Symlinks skills to `~/.agents/skills/` (auto-activate on description match) |
-| Codex Mac App | Plugin bundle at `~/plugins/ios-skills` + marketplace registration |
+| Agent | Install method | What it does |
+|-------|----------------|--------------|
+| Claude Code | `claude plugins marketplace add` + `install` | Registers marketplace, clones to cache, hooks auto-inject skills |
+| Codex CLI | `install.sh --codex` | Symlinks skills to `~/.agents/skills/` |
+| Codex Mac App | `install.sh --codex` | Plugin bundle at `~/plugins/ios-skills` + marketplace |
+
+Claude Code users don't need to clone the repo or run install.sh — the marketplace handles it.
 
 ## How It Works
 
