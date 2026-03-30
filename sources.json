@@ -147,6 +147,15 @@
         "jordancoin--pencil-mcp": "skills/pencil-mcp",
         "jordancoin--ralph-loop": "skills/ralph-loop"
       }
+    },
+    {
+      "repo": "Iron-Ham/XcodePreviews",
+      "author": "Iron-Ham",
+      "url": "https://github.com/Iron-Ham/XcodePreviews",
+      "license": "MIT",
+      "skills": {
+        "iron-ham--xcode-preview-capture": "skills/preview"
+      }
     }
   ]
 }
