@@ -182,7 +182,25 @@
         "priority": 7
       },
       {
-        "comment": "Any Swift file — baseline style",
+        "comment": "Manager/Service/Provider/Coordinator patterns",
+        "pattern": "*Manager*.swift|*Service*.swift|*Provider*.swift|*Coordinator*.swift|*Repository*.swift|*DataSource*.swift|*UseCase*.swift",
+        "skills": ["twostraws--swift-concurrency-pro", "efremidze--swift-architecture-skill"],
+        "priority": 5
+      },
+      {
+        "comment": "Networking / API layer",
+        "pattern": "*Network*.swift|*API*.swift|*Client*.swift|*Endpoint*.swift|*URLSession*.swift|*Request*.swift|*Response*.swift",
+        "skills": ["dpearson2699--ios-networking", "twostraws--swift-concurrency-pro"],
+        "priority": 6
+      },
+      {
+        "comment": "Config / JSON / Plist files in iOS projects",
+        "pattern": "*.json|*.plist|*.yaml|*.yml|*.xcconfig",
+        "skills": ["kimsungwhee--apple-docs-mcp"],
+        "priority": 2
+      },
+      {
+        "comment": "Any Swift file — baseline",
         "pattern": "*.swift",
         "skills": ["martinlasek--swift-coding-guideline"],
         "priority": 1

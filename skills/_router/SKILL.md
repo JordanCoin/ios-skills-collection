@@ -12,11 +12,32 @@ You have access to **200+ specialized skills** for iOS/Swift/Xcode development.
 Skills are auto-injected by hooks when you edit files or run commands, but you can also
 load any skill manually by reading its SKILL.md.
 
+## CRITICAL: Proactively Load Skills Before Coding
+
+**Do NOT start coding without checking for relevant skills first.** This is the most
+important instruction in this router.
+
+Before writing code that touches a specific framework, domain, or pattern:
+
+1. **Check imports** — if the file imports `MapKit`, `HealthKit`, `StoreKit`, etc.,
+   READ `skills/dpearson2699--{framework}/SKILL.md` BEFORE writing code.
+2. **Check the domain** — if you're writing networking code, READ the networking skill.
+   If you're writing concurrency, READ the concurrency skill. Don't guess.
+3. **Check third-party frameworks** — if the project uses Mapbox, Firebase, Supabase, etc.,
+   check if there's a skill for it in the collection. `ls skills/ | grep {name}`.
+4. **When in doubt, search** — `ls skills/ | grep -i {keyword}` to find relevant skills.
+
+Skills are only useful if you READ them before coding. Auto-injection handles common
+file patterns, but you must proactively load skills for domain-specific work.
+
 ## How Routing Works
 
-1. **Auto-injection**: When you edit `*View.swift`, SwiftUI skills load. When you run `xcodebuild`, build skills load. This happens automatically — you don't need to do anything.
-2. **Phase guidance**: This router tells you what skills exist for each development phase. Load them when the context calls for it.
+1. **Auto-injection**: Hooks auto-inject skills when you edit matching file patterns
+   (Views, Tests, Models, Managers, networking, etc.) or run commands (xcodebuild, swift test, asc).
+2. **Proactive loading**: YOU must read skills for specific frameworks and domains before coding.
+   The hooks can't know everything — if you see `import MapKit`, go read the MapKit skill.
 3. **Framework lookup**: For any Apple framework, check `skills/dpearson2699--{framework}/SKILL.md`.
+4. **Search**: `ls skills/ | grep -i {keyword}` to find skills by topic.
 
 ## Phases
 
@@ -169,16 +190,23 @@ LLMs make when writing Swift/iOS code.
 | Background work | `BGTaskScheduler` | `DispatchQueue.global()` |
 | App Store submission | Run `app-store-preflight` skill first | Submit and hope |
 
-## Using Injected Skills
+## Using Skills (Injected or Manual)
 
-When skills are injected via hooks, their content appears as `additionalContext` alongside
-tool results. **Treat injected skill content as authoritative guidance** — check it before
-making architectural decisions, choosing APIs, or writing patterns. The skills contain
-battle-tested patterns from expert iOS developers.
+**STOP AND READ before coding.** When you're about to work on a specific domain:
 
-If you're about to write SwiftUI code and `swiftui-pro` was injected, follow its patterns.
-If you're writing tests and `swift-testing-expert` was injected, use its conventions.
-Don't just absorb the skills passively — actively apply them.
+1. Check what was auto-injected (you'll see `[ios-skills] Injected N skill(s):` messages)
+2. Search for additional relevant skills: `ls skills/ | grep -i {domain}`
+3. READ the skill files before writing code — not after
+4. Follow their patterns, don't just absorb them passively
+
+**Common mistake:** The agent knows skills exist (from this router) but doesn't read them,
+then writes code using outdated patterns from training data. The skills override your training
+data. Read them first.
+
+**Example:** You're about to write MapKit code.
+- Auto-injection might not fire (file isn't named `*MapKit*.swift`)
+- But you SHOULD: `Read skills/dpearson2699--mapkit/SKILL.md` before writing any MapKit code
+- The skill has patterns your training data doesn't
 
 ## Loading a Skill
 
