@@ -210,7 +210,8 @@ data. Read them first.
 
 ## Loading a Skill
 
-Read the SKILL.md from the skills directory:
+The skills path is injected at session start (see "Skills location" above).
+Read the SKILL.md using that path:
 ```
 /path/to/ios-skills-collection/skills/{skill-id}/SKILL.md
 ```

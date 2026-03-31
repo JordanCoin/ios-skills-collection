@@ -44,7 +44,10 @@ try {
     // Don't block session start if check fails
   }
 
-  const header = `# iOS Skills Router — ${count} skills loaded${freshness}\n\n`;
+  const skillsDir = join(PLUGIN_ROOT, 'skills');
+  const pathNote = `\n**Skills location:** \`${skillsDir}/\`\nTo read a skill: \`Read ${skillsDir}/{skill-name}/SKILL.md\`\nTo search: \`ls ${skillsDir}/ | grep -i {keyword}\`\n`;
+
+  const header = `# iOS Skills Router — ${count} skills loaded${freshness}${pathNote}\n\n`;
   process.stdout.write(header + body);
 } catch (err) {
   process.stderr.write(`[ios-skills] Router injection failed: ${err.message}\n`);
