@@ -72,6 +72,33 @@ install_claude() {
         echo -e "  ${Y}!${N} Failed — try: claude plugins install ios-skills@ios-skills-collection"
     fi
 
+    # Register hooks in settings.json as fallback (like codemap does)
+    # This ensures hooks fire even if plugin system doesn't load them
+    local SETTINGS="$HOME/.claude/settings.json"
+    if [ -f "$SETTINGS" ]; then
+      if ! grep -q "ios-skills" "$SETTINGS" 2>/dev/null; then
+        python3 -c "
+import json
+with open('$SETTINGS') as f: s = json.load(f)
+hooks = s.setdefault('hooks', {})
+
+# SessionStart
+ss = hooks.setdefault('SessionStart', [])
+if not any('ios-skills' in str(e) for e in ss):
+    ss.append({'matcher': 'startup|resume|clear|compact', 'hooks': [{'type': 'command', 'command': 'node \"$PLUGIN_PATH/hooks/inject-router.mjs\"'}]})
+
+# PreToolUse
+ptu = hooks.setdefault('PreToolUse', [])
+if not any('ios-skills' in str(e) for e in ptu):
+    ptu.append({'matcher': 'Read|Edit|MultiEdit|Write|Bash', 'hooks': [{'type': 'command', 'command': 'node \"$PLUGIN_PATH/hooks/route-skills.mjs\"'}]})
+
+with open('$SETTINGS', 'w') as f: json.dump(s, f, indent=2)
+" 2>/dev/null && echo -e "  ${G}✓${N} Hooks registered in settings.json" || true
+      else
+        echo -e "  ${D}Hooks already in settings.json${N}"
+      fi
+    fi
+
     echo ""
   else
     echo -e "  ${D}Claude Code not found${N}"
@@ -173,6 +200,20 @@ m['plugins'] = [p for p in m.get('plugins', []) if p.get('name') != 'ios-skills'
 with open('$MARKETPLACE', 'w') as f: json.dump(m, f, indent=2)
 "
     echo -e "  ${G}✓${N} Removed from marketplace.json"
+  fi
+
+  # Remove hooks from settings.json
+  local SETTINGS="$HOME/.claude/settings.json"
+  if [ -f "$SETTINGS" ] && grep -q "ios-skills" "$SETTINGS" 2>/dev/null; then
+    python3 -c "
+import json
+with open('$SETTINGS') as f: s = json.load(f)
+for event in ['SessionStart', 'PreToolUse']:
+    if event in s.get('hooks', {}):
+        s['hooks'][event] = [e for e in s['hooks'][event] if 'ios-skills' not in str(e)]
+        if not s['hooks'][event]: del s['hooks'][event]
+with open('$SETTINGS', 'w') as f: json.dump(s, f, indent=2)
+" 2>/dev/null && echo -e "  ${G}✓${N} Removed hooks from settings.json"
   fi
 
   rm -rf "$HOME/.ios-skills" 2>/dev/null && echo -e "  ${G}✓${N} Removed ~/.ios-skills state"
