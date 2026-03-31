@@ -30,25 +30,17 @@ Skills sourced from [twostraws/Swift-Agent-Skills](https://github.com/twostraws/
 
 ## Install
 
-**Claude Code (recommended):**
+**Install:**
 ```bash
-claude plugins marketplace add https://github.com/JordanCoin/ios-skills-collection
-claude plugins install ios-skills@ios-skills-collection
+git clone https://github.com/JordanCoin/ios-skills-collection ~/.ios-skills 2>/dev/null || git -C ~/.ios-skills pull
+~/.ios-skills/install.sh
 ```
 
-**Codex (CLI + Mac App):**
-```bash
-(git clone https://github.com/JordanCoin/ios-skills-collection ~/.agents/ios-skills 2>/dev/null || git -C ~/.agents/ios-skills pull) && ~/.agents/ios-skills/install.sh --codex
-```
+That's it. The script detects what you have (Claude Code, Codex, Xcode) and installs for all of them.
 
-**Everything (Claude + Codex):**
+**Update:**
 ```bash
-(git clone https://github.com/JordanCoin/ios-skills-collection ~/.agents/ios-skills 2>/dev/null || git -C ~/.agents/ios-skills pull) && ~/.agents/ios-skills/install.sh --all
-```
-
-**Per-project (one session):**
-```bash
-git clone https://github.com/JordanCoin/ios-skills-collection .ios-skills && claude --plugin-dir .ios-skills
+git -C ~/.ios-skills pull && ~/.ios-skills/install.sh
 ```
 
 **Xcode (Claude Agent + Codex):**

@@ -1,9 +1,7 @@
 #!/bin/bash
 set -e
 
-# iOS Skills Collection — Install for Claude Code, Codex, and Xcode
-# 200+ skills from 28 authors, phase-aware routing
-
+# iOS Skills Collection — Auto-install for Claude Code, Codex, and Xcode
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PLUGIN_PATH="$SCRIPT_DIR"
 
@@ -16,307 +14,181 @@ echo -e "${B}iOS Skills Collection${N} — ${SKILL_COUNT} skills"
 echo -e "${D}ideation → design → develop → test → deploy → iterate${N}"
 echo ""
 
-# ── Shared helper ────────────────────────────────────────────────
+# ── Shared ───────────────────────────────────────────────────────
 symlink_skills_to() {
-  local dest="$1"
-  local label="$2"
+  local dest="$1" label="$2"
   mkdir -p "$dest"
-
   local count=0
   for skill_dir in "$PLUGIN_PATH/skills"/*/; do
     local name=$(basename "$skill_dir")
     [ "$name" = "_router" ] && continue
     [ ! -f "$skill_dir/SKILL.md" ] && continue
-
     local target="$dest/$name"
     if [ -L "$target" ]; then
-      local existing=$(readlink "$target" 2>/dev/null || true)
-      echo "$existing" | grep -q "$PLUGIN_PATH" 2>/dev/null && continue
-      ln -sfn "$skill_dir" "$target"
-      count=$((count + 1))
+      readlink "$target" 2>/dev/null | grep -q "$PLUGIN_PATH" && continue
+      ln -sfn "$skill_dir" "$target"; count=$((count + 1))
     elif [ ! -e "$target" ]; then
-      ln -sfn "$skill_dir" "$target"
-      count=$((count + 1))
+      ln -sfn "$skill_dir" "$target"; count=$((count + 1))
     fi
   done
-
-  # Router skill
   [ ! -e "$dest/_ios-router" ] && ln -sfn "$PLUGIN_PATH/skills/_router" "$dest/_ios-router"
-
   local total=$(find "$dest" -maxdepth 1 -type l 2>/dev/null | xargs -I{} readlink {} 2>/dev/null | grep -c "$PLUGIN_PATH" || true)
-  echo -e "  ${G}✓${N} $label — $total skills symlinked to $dest"
+  echo -e "  ${G}✓${N} $label — $total skills"
 }
 
-# ── Install functions ────────────────────────────────────────────
+# ── Claude Code ──────────────────────────────────────────────────
 install_claude() {
-  local HAS_CLAUDE=0
-  command -v claude >/dev/null 2>&1 && HAS_CLAUDE=1
-
+  command -v claude >/dev/null 2>&1 || return 0
   echo -e "${B}Claude Code:${N}"
-  if [ $HAS_CLAUDE -eq 1 ]; then
-    if claude plugins marketplace list 2>/dev/null | grep -q "ios-skills-collection" 2>/dev/null; then
-      echo -e "  ${D}Marketplace already added${N}"
-    else
-      echo -e "  Adding marketplace..."
-      claude plugins marketplace add "https://github.com/JordanCoin/ios-skills-collection" 2>/dev/null && \
-        echo -e "  ${G}✓${N} Marketplace added" || \
-        echo -e "  ${Y}!${N} Failed — try: claude plugins marketplace add https://github.com/JordanCoin/ios-skills-collection"
-    fi
 
-    if claude plugins list 2>/dev/null | grep -q "ios-skills" 2>/dev/null; then
-      echo -e "  ${G}✓${N} Plugin already installed"
-    else
-      echo -e "  Installing plugin..."
-      claude plugins install "ios-skills@ios-skills-collection" 2>/dev/null && \
-        echo -e "  ${G}✓${N} Plugin installed" || \
-        echo -e "  ${Y}!${N} Failed — try: claude plugins install ios-skills@ios-skills-collection"
-    fi
+  # Marketplace + plugin install
+  if ! claude plugins marketplace list 2>/dev/null | grep -q "ios-skills-collection" 2>/dev/null; then
+    claude plugins marketplace add "https://github.com/JordanCoin/ios-skills-collection" 2>/dev/null && \
+      echo -e "  ${G}✓${N} Marketplace added" || \
+      echo -e "  ${Y}!${N} Marketplace failed — try manually"
+  fi
+  if ! claude plugins list 2>/dev/null | grep -q "ios-skills" 2>/dev/null; then
+    claude plugins install "ios-skills@ios-skills-collection" 2>/dev/null && \
+      echo -e "  ${G}✓${N} Plugin installed" || \
+      echo -e "  ${Y}!${N} Plugin install failed — try manually"
+  else
+    echo -e "  ${G}✓${N} Plugin installed"
+  fi
 
-    # Register hooks in settings.json as fallback (like codemap does)
-    # This ensures hooks fire even if plugin system doesn't load them
-    local SETTINGS="$HOME/.claude/settings.json"
-    if [ -f "$SETTINGS" ]; then
-      if ! grep -q "ios-skills" "$SETTINGS" 2>/dev/null; then
-        python3 -c "
+  # Register hooks in settings.json (reliable — same as codemap)
+  local SETTINGS="$HOME/.claude/settings.json"
+  mkdir -p "$HOME/.claude"
+  if [ ! -f "$SETTINGS" ]; then
+    echo '{}' > "$SETTINGS"
+  fi
+  if ! grep -q "ios-skills" "$SETTINGS" 2>/dev/null; then
+    python3 -c "
 import json
 with open('$SETTINGS') as f: s = json.load(f)
 hooks = s.setdefault('hooks', {})
-
-# SessionStart
 ss = hooks.setdefault('SessionStart', [])
 if not any('ios-skills' in str(e) for e in ss):
-    ss.append({'matcher': 'startup|resume|clear|compact', 'hooks': [{'type': 'command', 'command': 'node \"$PLUGIN_PATH/hooks/inject-router.mjs\"'}]})
-
-# PreToolUse
+    ss.append({'matcher':'startup|resume|clear|compact','hooks':[{'type':'command','command':'node \"$PLUGIN_PATH/hooks/inject-router.mjs\"'}]})
 ptu = hooks.setdefault('PreToolUse', [])
 if not any('ios-skills' in str(e) for e in ptu):
-    ptu.append({'matcher': 'Read|Edit|MultiEdit|Write|Bash', 'hooks': [{'type': 'command', 'command': 'node \"$PLUGIN_PATH/hooks/route-skills.mjs\"'}]})
-
+    ptu.append({'matcher':'Read|Edit|MultiEdit|Write|Bash','hooks':[{'type':'command','command':'node \"$PLUGIN_PATH/hooks/route-skills.mjs\"'}]})
 with open('$SETTINGS', 'w') as f: json.dump(s, f, indent=2)
-" 2>/dev/null && echo -e "  ${G}✓${N} Hooks registered in settings.json" || true
-      else
-        echo -e "  ${D}Hooks already in settings.json${N}"
-      fi
-    fi
-
-    echo ""
+" && echo -e "  ${G}✓${N} Hooks registered" || echo -e "  ${Y}!${N} Hook registration failed"
   else
-    echo -e "  ${D}Claude Code not found${N}"
+    echo -e "  ${G}✓${N} Hooks registered"
   fi
+  echo ""
 }
 
-install_codex_skills() {
-  symlink_skills_to "$HOME/.agents/skills" "Codex CLI"
-}
+# ── Codex ────────────────────────────────────────────────────────
+install_codex() {
+  echo -e "${B}Codex:${N}"
+  symlink_skills_to "$HOME/.agents/skills" "CLI (~/.agents/skills)"
 
-install_codex_plugin() {
-  local PLUGINS_DIR="$HOME/plugins"
-  local MARKETPLACE="$HOME/.agents/plugins/marketplace.json"
-
-  mkdir -p "$PLUGINS_DIR"
-  mkdir -p "$(dirname "$MARKETPLACE")"
-
-  local target="$PLUGINS_DIR/ios-skills"
-  if [ -L "$target" ]; then
-    local existing=$(readlink "$target" 2>/dev/null || true)
-    if echo "$existing" | grep -q "$PLUGIN_PATH" 2>/dev/null; then
-      echo -e "  ${D}Codex Mac App: already linked${N}"
-    else
+  # Mac App plugin bundle
+  if [ -d "/Applications/Codex.app" ] || command -v codex >/dev/null 2>&1; then
+    local PLUGINS_DIR="$HOME/plugins"
+    local MARKETPLACE="$HOME/.agents/plugins/marketplace.json"
+    mkdir -p "$PLUGINS_DIR" "$(dirname "$MARKETPLACE")"
+    local target="$PLUGINS_DIR/ios-skills"
+    if [ ! -L "$target" ] || ! readlink "$target" 2>/dev/null | grep -q "$PLUGIN_PATH"; then
       ln -sfn "$PLUGIN_PATH" "$target"
-      echo -e "  ${G}✓${N} Codex Mac App — updated symlink"
     fi
-  elif [ ! -e "$target" ]; then
-    ln -sfn "$PLUGIN_PATH" "$target"
-    echo -e "  ${G}✓${N} Codex Mac App — symlinked to ~/plugins/ios-skills"
-  fi
-
-  if [ -f "$MARKETPLACE" ]; then
-    if grep -q '"ios-skills"' "$MARKETPLACE" 2>/dev/null; then
-      echo -e "  ${D}Marketplace: already registered${N}"
-      return 0
+    if [ ! -f "$MARKETPLACE" ] || ! grep -q '"ios-skills"' "$MARKETPLACE" 2>/dev/null; then
+      python3 -c "
+import json, os
+mp = '$MARKETPLACE'
+m = json.load(open(mp)) if os.path.exists(mp) else {'name':'local-plugins','interface':{'displayName':'Local Plugins'},'plugins':[]}
+if not any(p.get('name')=='ios-skills' for p in m.get('plugins',[])):
+    m.setdefault('plugins',[]).append({'name':'ios-skills','source':{'source':'local','path':'./plugins/ios-skills'},'policy':{'installation':'INSTALLED_BY_DEFAULT','authentication':'ON_INSTALL'},'category':'Coding'})
+with open(mp,'w') as f: json.dump(m,f,indent=2)
+" 2>/dev/null
     fi
-    python3 -c "
-import json
-with open('$MARKETPLACE') as f: m = json.load(f)
-m.setdefault('plugins', [])
-m['plugins'].append({'name':'ios-skills','source':{'source':'local','path':'./plugins/ios-skills'},'policy':{'installation':'INSTALLED_BY_DEFAULT','authentication':'ON_INSTALL'},'category':'Coding'})
-with open('$MARKETPLACE', 'w') as f: json.dump(m, f, indent=2)
-"
-  else
-    python3 -c "
-import json
-m={'name':'local-plugins','interface':{'displayName':'Local Plugins'},'plugins':[{'name':'ios-skills','source':{'source':'local','path':'./plugins/ios-skills'},'policy':{'installation':'INSTALLED_BY_DEFAULT','authentication':'ON_INSTALL'},'category':'Coding'}]}
-with open('$MARKETPLACE', 'w') as f: json.dump(m, f, indent=2)
-"
+    echo -e "  ${G}✓${N} Mac App (~/plugins/ios-skills)"
   fi
-  echo -e "  ${G}✓${N} Marketplace — registered"
+  echo ""
 }
 
+# ── Xcode ────────────────────────────────────────────────────────
 install_xcode() {
+  [ -d "/Applications/Xcode.app" ] || return 0
   echo -e "${B}Xcode:${N}"
-  local XCODE_CLAUDE="$HOME/Library/Developer/Xcode/CodingAssistant/ClaudeAgentConfig/skills"
-  local XCODE_CODEX="$HOME/Library/Developer/Xcode/CodingAssistant/codex/skills"
-
-  symlink_skills_to "$XCODE_CLAUDE" "Xcode (Claude Agent)"
-  symlink_skills_to "$XCODE_CODEX" "Xcode (Codex)"
-
-  echo -e "  ${D}Restart Xcode to pick up new skills${N}"
+  symlink_skills_to "$HOME/Library/Developer/Xcode/CodingAssistant/ClaudeAgentConfig/skills" "Claude Agent"
+  symlink_skills_to "$HOME/Library/Developer/Xcode/CodingAssistant/codex/skills" "Codex"
+  echo -e "  ${D}Restart Xcode to pick up skills${N}"
+  echo ""
 }
 
+# ── Uninstall ────────────────────────────────────────────────────
 uninstall() {
   echo -e "${Y}Uninstalling...${N}"
-
-  # Remove symlinks from all known locations
-  for dir in \
-    "$HOME/.agents/skills" \
+  for dir in "$HOME/.agents/skills" \
     "$HOME/Library/Developer/Xcode/CodingAssistant/ClaudeAgentConfig/skills" \
     "$HOME/Library/Developer/Xcode/CodingAssistant/codex/skills"; do
     if [ -d "$dir" ]; then
       local count=0
       for link in "$dir"/*; do
-        if [ -L "$link" ] && readlink "$link" | grep -q "$PLUGIN_PATH" 2>/dev/null; then
-          rm "$link"
-          count=$((count + 1))
-        fi
+        [ -L "$link" ] && readlink "$link" | grep -q "$PLUGIN_PATH" && rm "$link" && count=$((count + 1))
       done
       [ $count -gt 0 ] && echo -e "  ${G}✓${N} Removed $count symlinks from $dir"
     fi
   done
-
-  # Plugin bundle
-  local plugin_link="$HOME/plugins/ios-skills"
-  if [ -L "$plugin_link" ] && readlink "$plugin_link" | grep -q "$PLUGIN_PATH" 2>/dev/null; then
-    rm "$plugin_link"
-    echo -e "  ${G}✓${N} Removed ~/plugins/ios-skills"
-  fi
-
-  # Marketplace
-  local MARKETPLACE="$HOME/.agents/plugins/marketplace.json"
-  if [ -f "$MARKETPLACE" ] && grep -q '"ios-skills"' "$MARKETPLACE" 2>/dev/null; then
+  [ -L "$HOME/plugins/ios-skills" ] && rm "$HOME/plugins/ios-skills" && echo -e "  ${G}✓${N} Removed ~/plugins/ios-skills"
+  local MP="$HOME/.agents/plugins/marketplace.json"
+  if [ -f "$MP" ] && grep -q '"ios-skills"' "$MP" 2>/dev/null; then
     python3 -c "
 import json
-with open('$MARKETPLACE') as f: m = json.load(f)
-m['plugins'] = [p for p in m.get('plugins', []) if p.get('name') != 'ios-skills']
-with open('$MARKETPLACE', 'w') as f: json.dump(m, f, indent=2)
-"
-    echo -e "  ${G}✓${N} Removed from marketplace.json"
+with open('$MP') as f: m=json.load(f)
+m['plugins']=[p for p in m.get('plugins',[]) if p.get('name')!='ios-skills']
+with open('$MP','w') as f: json.dump(m,f,indent=2)
+" && echo -e "  ${G}✓${N} Removed from marketplace.json"
   fi
-
-  # Remove hooks from settings.json
   local SETTINGS="$HOME/.claude/settings.json"
   if [ -f "$SETTINGS" ] && grep -q "ios-skills" "$SETTINGS" 2>/dev/null; then
     python3 -c "
 import json
-with open('$SETTINGS') as f: s = json.load(f)
-for event in ['SessionStart', 'PreToolUse']:
-    if event in s.get('hooks', {}):
-        s['hooks'][event] = [e for e in s['hooks'][event] if 'ios-skills' not in str(e)]
+with open('$SETTINGS') as f: s=json.load(f)
+for event in ['SessionStart','PreToolUse']:
+    if event in s.get('hooks',{}):
+        s['hooks'][event]=[e for e in s['hooks'][event] if 'ios-skills' not in str(e)]
         if not s['hooks'][event]: del s['hooks'][event]
-with open('$SETTINGS', 'w') as f: json.dump(s, f, indent=2)
-" 2>/dev/null && echo -e "  ${G}✓${N} Removed hooks from settings.json"
+with open('$SETTINGS','w') as f: json.dump(s,f,indent=2)
+" && echo -e "  ${G}✓${N} Removed hooks from settings.json"
   fi
-
-  rm -rf "$HOME/.ios-skills" 2>/dev/null && echo -e "  ${G}✓${N} Removed ~/.ios-skills state"
-
-  echo ""
-  echo -e "  ${D}If installed as Claude plugin: claude plugins remove ios-skills${N}"
+  rm -rf "$HOME/.ios-skills" 2>/dev/null
+  echo -e "  ${D}Claude plugin: claude plugins remove ios-skills${N}"
   echo -e "${G}Done.${N}"
 }
 
+# ── Status ───────────────────────────────────────────────────────
 status() {
   echo -e "${B}Status:${N}"
-
-  # Claude Code
-  if command -v claude >/dev/null 2>&1; then
-    if claude plugins list 2>/dev/null | grep -q "ios-skills" 2>/dev/null; then
-      echo -e "  Claude Code:       ${G}installed${N}"
-    else
-      echo -e "  Claude Code:       ${Y}not installed${N}"
-    fi
-  else
-    echo -e "  Claude Code:       ${D}not found${N}"
-  fi
-
-  # Codex CLI
-  local codex_count=$(find "$HOME/.agents/skills" -maxdepth 1 -type l 2>/dev/null | xargs -I{} readlink {} 2>/dev/null | grep -c "$PLUGIN_PATH" || true)
-  [ "$codex_count" -gt 0 ] && echo -e "  Codex CLI:         ${G}installed${N} ($codex_count skills)" || echo -e "  Codex CLI:         ${Y}not installed${N}"
-
-  # Codex Mac App
-  if [ -L "$HOME/plugins/ios-skills" ] && readlink "$HOME/plugins/ios-skills" | grep -q "$PLUGIN_PATH" 2>/dev/null; then
-    echo -e "  Codex Mac App:     ${G}installed${N}"
-  else
-    echo -e "  Codex Mac App:     ${Y}not installed${N}"
-  fi
-
-  # Xcode
-  local xc_claude=$(find "$HOME/Library/Developer/Xcode/CodingAssistant/ClaudeAgentConfig/skills" -maxdepth 1 -type l 2>/dev/null | xargs -I{} readlink {} 2>/dev/null | grep -c "$PLUGIN_PATH" || true)
-  local xc_codex=$(find "$HOME/Library/Developer/Xcode/CodingAssistant/codex/skills" -maxdepth 1 -type l 2>/dev/null | xargs -I{} readlink {} 2>/dev/null | grep -c "$PLUGIN_PATH" || true)
-  if [ "$xc_claude" -gt 0 ] || [ "$xc_codex" -gt 0 ]; then
-    echo -e "  Xcode:             ${G}installed${N} (Claude: $xc_claude, Codex: $xc_codex skills)"
-  else
-    echo -e "  Xcode:             ${Y}not installed${N}"
-  fi
-
+  command -v claude >/dev/null 2>&1 && {
+    claude plugins list 2>/dev/null | grep -q "ios-skills" && echo -e "  Claude Code:     ${G}installed${N}" || echo -e "  Claude Code:     ${Y}plugin not found${N}"
+    grep -q "ios-skills" "$HOME/.claude/settings.json" 2>/dev/null && echo -e "  Hooks:           ${G}registered${N}" || echo -e "  Hooks:           ${R}not registered${N}"
+  } || echo -e "  Claude Code:     ${D}not found${N}"
+  local cc=$(find "$HOME/.agents/skills" -maxdepth 1 -type l 2>/dev/null | xargs -I{} readlink {} 2>/dev/null | grep -c "$PLUGIN_PATH" || true)
+  [ "$cc" -gt 0 ] && echo -e "  Codex CLI:       ${G}installed${N} ($cc)" || echo -e "  Codex CLI:       ${Y}not installed${N}"
+  [ -L "$HOME/plugins/ios-skills" ] && echo -e "  Codex Mac App:   ${G}installed${N}" || echo -e "  Codex Mac App:   ${Y}not installed${N}"
+  local xc=$(find "$HOME/Library/Developer/Xcode/CodingAssistant" -maxdepth 3 -type l -name "*--*" 2>/dev/null | xargs -I{} readlink {} 2>/dev/null | grep -c "$PLUGIN_PATH" || true)
+  [ "$xc" -gt 0 ] && echo -e "  Xcode:           ${G}installed${N} ($xc)" || echo -e "  Xcode:           ${Y}not installed${N}"
   echo ""
-  echo -e "  ${D}$SKILL_COUNT skills across 6 phases from 28 authors${N}"
+  echo -e "  ${D}$SKILL_COUNT skills / 28 authors / 6 phases${N}"
 }
 
-# ── Parse args ───────────────────────────────────────────────────
+# ── Main ─────────────────────────────────────────────────────────
 case "${1:-}" in
-  --claude|-c)
-    install_claude ;;
-  --codex|-x)
-    install_codex_skills
-    install_codex_plugin ;;
-  --xcode)
-    install_xcode ;;
-  --all|-a)
-    install_claude
-    install_codex_skills
-    install_codex_plugin
-    install_xcode ;;
-  --uninstall|-u)
-    uninstall ;;
-  --status)
-    status ;;
+  --uninstall|-u) uninstall ;;
+  --status|-s)    status ;;
   --help|-h)
-    echo "Usage: ./install.sh [option]"
-    echo ""
-    echo "  --all, -a           Install for all agents (recommended)"
-    echo "  --claude, -c        Install for Claude Code"
-    echo "  --codex, -x         Install for Codex (CLI + Mac App)"
-    echo "  --xcode             Install for Xcode (Claude Agent + Codex)"
-    echo "  --uninstall, -u     Remove from all agents"
-    echo "  --status            Show installation status"
-    echo "  (no args)           Interactive mode"
+    echo "Usage: ./install.sh           # install for all detected agents"
+    echo "       ./install.sh --status  # show what's installed"
+    echo "       ./install.sh --uninstall"
     ;;
   *)
-    echo -e "Detected:"
-    command -v claude >/dev/null 2>&1 && echo -e "  ${G}✓${N} Claude Code" || echo -e "  ${D}✗ Claude Code${N}"
-    command -v codex  >/dev/null 2>&1 && echo -e "  ${G}✓${N} Codex CLI"   || echo -e "  ${D}✗ Codex CLI${N}"
-    [ -d "/Applications/Codex.app" ] && echo -e "  ${G}✓${N} Codex Mac App" || echo -e "  ${D}✗ Codex Mac App${N}"
-    [ -d "/Applications/Xcode.app" ] && echo -e "  ${G}✓${N} Xcode"        || echo -e "  ${D}✗ Xcode${N}"
-    echo ""
-    echo "  1) Install for all detected agents (recommended)"
-    echo "  2) Claude Code only"
-    echo "  3) Codex (CLI + Mac App)"
-    echo "  4) Xcode only"
-    echo "  5) Show status"
-    echo "  6) Uninstall"
-    echo ""
-    read -p "Choice [1-6]: " choice
-    case $choice in
-      1) install_claude; install_codex_skills; install_codex_plugin; install_xcode ;;
-      2) install_claude ;;
-      3) install_codex_skills; install_codex_plugin ;;
-      4) install_xcode ;;
-      5) status ;;
-      6) uninstall ;;
-      *) echo -e "${R}Invalid choice${N}"; exit 1 ;;
-    esac
+    install_claude
+    install_codex
+    install_xcode
+    echo -e "${D}Restart Claude Code / Xcode to pick up new skills.${N}"
     ;;
 esac
-
-echo ""
-echo -e "${D}Claude: skills auto-inject via hooks when editing .swift or running xcodebuild.${N}"
-echo -e "${D}Codex/Xcode: skills auto-activate based on SKILL.md description matching.${N}"
