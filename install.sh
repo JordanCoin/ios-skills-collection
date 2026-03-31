@@ -72,17 +72,6 @@ install_claude() {
         echo -e "  ${Y}!${N} Failed — try: claude plugins install ios-skills@ios-skills-collection"
     fi
 
-    # Symlink router skill into ~/.claude/skills/ so Claude always discovers it
-    local CLAUDE_SKILLS="$HOME/.claude/skills"
-    mkdir -p "$CLAUDE_SKILLS"
-    local router_target="$CLAUDE_SKILLS/ios-skills-router"
-    if [ -L "$router_target" ]; then
-      local existing=$(readlink "$router_target" 2>/dev/null || true)
-      echo "$existing" | grep -q "ios-skills" 2>/dev/null || ln -sfn "$PLUGIN_PATH/skills/_router" "$router_target"
-    elif [ ! -e "$router_target" ]; then
-      ln -sfn "$PLUGIN_PATH/skills/_router" "$router_target"
-    fi
-    echo -e "  ${G}✓${N} Router skill linked to ~/.claude/skills/ios-skills-router"
     echo ""
   else
     echo -e "  ${D}Claude Code not found${N}"
