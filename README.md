@@ -170,7 +170,7 @@ All skills are vendored with attribution. Each directory is prefixed with the so
 | Author | Repo | Skills | Description |
 |--------|------|--------|-------------|
 | **truongduy2611** | [truongduy2611/app-store-preflight-skills](https://github.com/truongduy2611/app-store-preflight-skills) | 1 | App Store rejection scanner |
-| **Rudrank Riyam** | [rudrankriyam/app-store-connect-cli-skills](https://github.com/rudrankriyam/app-store-connect-cli-skills) | 22 | App Store Connect CLI automation |
+| **Rudrank Riyam** | [rudrankriyam/app-store-connect-cli-skills](https://github.com/rudrankriyam/app-store-connect-cli-skills) | 25 | App Store Connect CLI automation |
 | **Eronred** | [Eronred/aso-skills](https://github.com/Eronred/aso-skills) | 30 | App Store Optimization (keywords, metadata, competitors) |
 | **Tim Broddin** | [timbroddin/app-store-aso-skill](https://github.com/timbroddin/app-store-aso-skill) | 1 | ASO learnings |
 

@@ -12,6 +12,16 @@ Use this skill when you need to run or design `asc` commands for App Store Conne
   - `asc --help`
   - `asc builds --help`
   - `asc builds list --help`
+- Use `asc search` for local, deterministic command discovery when you know the workflow but not the command path.
+  - `asc search "submit app for review"`
+  - `asc search --output table "upload build"`
+- Use `asc schema` to inspect bundled App Store Connect endpoint schemas and request/query fields before designing API-facing commands.
+  - `asc schema --pretty "GET /v1/apps"`
+  - `asc schema --method POST appStoreVersions`
+- Use `asc capabilities` to explain CLI-supported, partial, web-session, and public-API-limited workflow coverage.
+  - `asc capabilities --area release --output table`
+  - `asc capabilities --status web-session --output table`
+  - `asc capabilities --status not-public-api --output markdown`
 
 ## Canonical verbs (current asc)
 - Prefer `view` over legacy `get` aliases for read-only commands in docs and automation.
@@ -22,6 +32,9 @@ Use this skill when you need to run or design `asc` commands for App Store Conne
   - `asc pricing availability edit --app "APP_ID" --territory "USA,GBR" --available true`
   - `asc app-setup availability edit --app "APP_ID" --territory "USA,GBR" --available true`
   - `asc xcode version edit --build-number "42"`
+- Use `asc pricing availability create` to initialize app availability before using the update-only `edit` command. If Apple rejects the public-API bootstrap, authenticate a web session and use `asc web apps availability create`, or configure Pricing and Availability in App Store Connect.
+  - `asc pricing availability create --app "APP_ID" --territory "USA,GBR" --available true --available-in-new-territories true`
+  - `asc web apps availability create --app "APP_ID" --territory "USA,GBR" --available-in-new-territories true`
 - Keep `set` where the CLI intentionally models a higher-level replacement/configuration flow and `--help` still shows `set` as the canonical verb.
 
 ## Flag conventions
@@ -40,8 +53,22 @@ Use this skill when you need to run or design `asc` commands for App Store Conne
 - Fallback env vars: `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_PRIVATE_KEY_PATH`, `ASC_PRIVATE_KEY`, `ASC_PRIVATE_KEY_B64`.
 - `ASC_APP_ID` can provide a default app ID.
 - When permissions are unclear, inspect exact API key role coverage with `asc web auth capabilities`.
-  - This lives under the experimental web auth surface.
+  - This lives under the web-session auth surface.
   - It can resolve the current local auth by default, or inspect a specific key with `--key-id`.
+- Create an App Store Connect team API key through a cached Apple Account web session with `asc web api-keys create`.
+  - An Account Holder or Admin session is required; use `asc web auth login --apple-id "user@example.com"` first when needed.
+  - The command saves the one-time P8 as `AuthKey_<KEY_ID>.p8` without printing its contents; choose an explicit private directory with `--output-dir`.
+  - Example: `asc web api-keys create --name "CI uploads" --role APP_MANAGER --output-dir "./keys" --output json`.
+
+## Apple Ads
+- Use `asc ads --help` before choosing a command.
+- Apple Ads uses `asc ads auth`, `--ads-profile`, and `ASC_ADS_*` variables. It does not use App Store Connect API credentials.
+- Direct resource commands use Platform API v1 with `--ad-account` or `ASC_ADS_AD_ACCOUNT_ID`. Deprecated Campaign Management API v5 commands live under `asc ads v5` and use `--org` or `ASC_ADS_ORG_ID`; never substitute one ID for the other.
+- Discover ad-account access with `asc ads auth discover --output json` or inspect one ACL response with `asc ads acls list --output json`.
+- Body commands use `--file` with the exact schema named by the leaf help. V1 query filters use singular `value`, and bulk bodies may use wrapper objects rather than v5 arrays.
+- Apple Ads resource commands emit JSON. Use `--paginate` only where help shows it; reports and most query bodies carry pagination inside the JSON file.
+- Deletes and spend-, billing-, delivery-, targeting-, or access-sensitive mutations require `--confirm`. An explicitly paused campaign create is the main documented safe exception.
+- For live mutation tests, create paused resources with a clear test name, save every ID, pause spend-bearing resources first, and delete only resources created by the test.
 
 ## Timeouts
 - `ASC_TIMEOUT` / `ASC_TIMEOUT_SECONDS` control request timeouts.
