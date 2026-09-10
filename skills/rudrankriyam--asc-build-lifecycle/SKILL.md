@@ -12,6 +12,7 @@ Use this skill to manage build state, processing, and retention.
   - `asc builds info --app "APP_ID" --latest --version "1.2.3" --platform IOS`
 - Next safe build number:
   - `asc builds next-build-number --app "APP_ID" --version "1.2.3" --platform IOS`
+  - The command scans the full processed-build history and in-flight uploads, then returns one greater than the highest positive numeric build number. Blank or non-numeric processed build numbers are skipped with a warning; if no usable number remains, it falls back to `--initial-build-number`.
 - Recent builds:
   - `asc builds list --app "APP_ID" --sort -uploadedDate --limit 10`
 
@@ -32,5 +33,6 @@ Use this skill to manage build state, processing, and retention.
   - `asc builds expire --build-id "BUILD_ID" --confirm`
 
 ## Notes
-- `asc builds upload` prepares upload operations only; use `asc publish` for end-to-end flows.
+- `asc builds upload` uploads and commits an IPA or PKG. Use `asc publish` when
+  the workflow must also distribute to TestFlight or stage an App Store release.
 - For long processing times, use `--wait`, `--poll-interval`, and `--timeout` where supported.

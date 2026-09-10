@@ -8,7 +8,8 @@ description: Set territory-specific pricing for subscriptions and in-app purchas
 Use this skill to create or update localized pricing across territories based on purchasing power parity (PPP) or your own regional pricing strategy.
 
 Prefer the current high-level flows:
-- `asc subscriptions setup` and `asc iap setup` when you are creating a new product
+- `asc subscriptions setup` and `asc iap setup` for parent creation and pricing,
+  followed by version-scoped metadata commands
 - `asc subscriptions pricing ...` for subscription pricing changes
 - `asc iap pricing summary` and `asc iap pricing schedules ...` for IAP pricing changes
 
@@ -20,8 +21,12 @@ Prefer the current high-level flows:
 
 ## Subscription PPP workflow
 
-### New subscription: bootstrap with `setup`
-Use `setup` when you are creating a new subscription and want to create the group, subscription, first localization, initial price, and availability in one verified flow.
+### New subscription: bootstrap the parent and price with `setup`
+Use `setup` to create the group and subscription, upload the App Review
+screenshot, materialize the complete equalized price matrix, and set sale
+availability. Create the API 4.4.1 group and subscription versions afterward;
+the localization flags on `setup` use deprecated v1 resources and must not be
+used for new workflows.
 
 ```bash
 asc subscriptions setup \
@@ -30,19 +35,61 @@ asc subscriptions setup \
   --reference-name "Pro Monthly" \
   --product-id "com.example.pro.monthly" \
   --subscription-period ONE_MONTH \
-  --locale "en-US" \
-  --display-name "Pro Monthly" \
-  --description "Unlock everything" \
+  --review-screenshot "./review.png" \
   --price "9.99" \
   --price-territory "USA" \
   --territories "USA,CAN,GBR" \
+  --no-verify \
   --output json
 ```
 
+Capture `.groupId` and `.subscriptionId` from the setup JSON, then add
+version-scoped metadata. `--no-verify` is intentional here: without deprecated
+v1 localizations, the parent can remain `MISSING_METADATA` until the v2 steps
+finish.
+
+```bash
+asc subscriptions groups versions list --group-id "GROUP_ID" --state PREPARE_FOR_SUBMISSION --paginate --output json
+# If and only if the list has zero matches:
+asc subscriptions groups versions create --group-id "GROUP_ID" --output json
+# For one match, reuse .data[0].id. For more than one, stop and require an explicit GROUP_VERSION_ID.
+asc subscriptions groups versions localizations list --version-id "GROUP_VERSION_ID" --paginate --output json
+# If and only if en-US is missing:
+asc subscriptions groups versions localizations create --version-id "GROUP_VERSION_ID" --locale "en-US" --name "Pro"
+# Otherwise, if and only if the resolved en-US name differs:
+asc subscriptions groups versions localizations update --id "GROUP_LOC_ID" --name "Pro"
+# Otherwise, do nothing.
+
+asc subscriptions versions list --subscription-id "SUB_ID" --state PREPARE_FOR_SUBMISSION --paginate --output json
+# If and only if the list has zero matches:
+asc subscriptions versions create --subscription-id "SUB_ID" --output json
+# For one match, reuse .data[0].id. For more than one, stop and require an explicit SUBSCRIPTION_VERSION_ID.
+asc subscriptions versions localizations list --version-id "SUBSCRIPTION_VERSION_ID" --paginate --output json
+# If and only if en-US is missing:
+asc subscriptions versions localizations create --version-id "SUBSCRIPTION_VERSION_ID" --locale "en-US" --name "Pro Monthly" --description "Unlock everything"
+# Otherwise, if and only if the resolved en-US values differ:
+asc subscriptions versions localizations update --id "SUBSCRIPTION_LOC_ID" --name "Pro Monthly" --description "Unlock everything"
+# Otherwise, do nothing.
+asc subscriptions groups versions localizations list --version-id "GROUP_VERSION_ID" --paginate --output table
+asc subscriptions versions localizations list --version-id "SUBSCRIPTION_VERSION_ID" --paginate --output table
+asc validate subscriptions --app "APP_ID" --output table
+```
+
+For each version list, reuse its single `PREPARE_FOR_SUBMISSION` result. Create
+only when the result is empty; if more than one result is returned, stop and
+require an explicit version ID instead of creating another non-deletable
+version. Each localization create/update pair is also conditional: create for
+a missing locale, update the resolved localization only when values differ,
+and do nothing when it already matches.
+
 Notes:
-- `setup` verifies the created state by default.
-- Use `--no-verify` only when you explicitly want speed over readback verification.
+- `setup` materializes Apple's complete equalized price matrix from the selected
+  base price. This split workflow defers final verification until the v2
+  localizations exist.
+- Outside this split v2 bootstrap, omit `--no-verify` so setup performs its
+  normal readback verification.
 - Use `--tier` or `--price-point-id` instead of `--price` when your workflow is tier-driven.
+- If an existing subscription remains `MISSING_METADATA` with the same selected base price, re-run the setup inputs with `--repair` to atomically rebuild and re-save the matrix.
 
 ### Inspect current subscription pricing before changes
 Use the summary view first when you want a compact current-state snapshot.
@@ -54,6 +101,55 @@ asc subscriptions pricing prices list --subscription-id "SUB_ID" --paginate
 ```
 
 Use `summary` for quick before/after spot checks and `prices list` when you need raw price records.
+
+### Derive one subscription's localized prices from another
+Use `derive` when a target subscription should stay near a fixed multiple of a
+source subscription in every territory, such as yearly pricing near 10 times
+monthly pricing. Apple ladders scale unevenly across territories, so preview
+the selected target points and achieved multiples before applying them.
+
+```bash
+asc subscriptions pricing derive \
+  --source-subscription-id "MONTHLY_SUB_ID" \
+  --target-subscription-id "YEARLY_SUB_ID" \
+  --multiplier "10" \
+  --round nearest \
+  --dry-run \
+  --output table
+```
+
+Choose how a desired price resolves when Apple does not offer it:
+
+- `exact` fails unless the calculated amount exists on the target ladder.
+- `nearest` chooses the closest amount; an exact tie chooses the lower one.
+- `up` chooses the smallest available amount at or above the calculation.
+- `down` chooses the largest available amount at or below the calculation.
+
+The confirmed command fetches current prices and builds a fresh plan; it does
+not reuse the preceding dry-run result. When the applied values must match the
+reviewed values, rerun `--dry-run` immediately before confirming, then apply:
+
+```bash
+asc subscriptions pricing derive \
+  --source-subscription-id "MONTHLY_SUB_ID" \
+  --target-subscription-id "YEARLY_SUB_ID" \
+  --multiplier "10" \
+  --round nearest \
+  --confirm \
+  --output table
+```
+
+The source and target must be distinct subscriptions with existing standard
+`UPFRONT` prices. The operation is a one-time snapshot, not a persistent link.
+It fails closed before mutation when any territory cannot resolve, skips target
+prices that already match, and verifies applied prices by reading them back.
+Use `--territory "SWE"` for a focused preview or staged one-territory update;
+omit it to derive every current source territory.
+Approved or live targets are scheduled for tomorrow by default when no
+`--start-date` is supplied because `--auto-start-date` defaults to true. Pass
+`--auto-start-date=false` to apply immediately, or use an explicit date when
+coordinating a rollout.
+The command does not change subscription sale availability.
 
 ### Preferred bulk PPP update: import a CSV with dry run
 For broad PPP rollouts, prefer the subscription pricing import command instead of manually adding territory prices one by one.
@@ -84,6 +180,7 @@ Apply for real:
 asc subscriptions pricing prices import \
   --subscription-id "SUB_ID" \
   --input "./ppp-prices.csv" \
+  --confirm \
   --output table
 ```
 
@@ -115,7 +212,18 @@ Use price-point lookup and equalizations when you want to inspect Apple's locali
 ```bash
 asc subscriptions pricing price-points list --subscription-id "SUB_ID" --territory "USA" --paginate --price "9.99"
 asc subscriptions pricing price-points equalizations --price-point-id "PRICE_POINT_ID" --paginate
+asc subscriptions pricing price-points adjusted-equalizations --price-point-id "PRICE_POINT_ID" --upfront-price-point-id "UPFRONT_PRICE_POINT_ID" --plan-type MONTHLY --subscription-id "SUB_ID" --paginate
 ```
+
+Use `equalizations` for Apple's standard localized ladder. Use
+`adjusted-equalizations` when you need the API 4.4.1 subscription-specific
+adjustments. For a fresh adjusted-equalizations request, pass both
+`--upfront-price-point-id` and `--plan-type`; `--subscription-id` and
+`--territory` are optional filters. Treat `--next` as an opaque continuation
+URL. On a resumed `equalizations` or `adjusted-equalizations` request, pass only
+`--next` without the original owner `--price-point-id`, filters, sparse fields,
+includes, or limit; the continuation URL already carries that query state.
+`--paginate` and explicit output flags may still be used.
 
 ### Verify after apply
 Re-run the summary and raw list views after changes.
@@ -126,10 +234,12 @@ asc subscriptions pricing summary --subscription-id "SUB_ID" --territory "BRA"
 asc subscriptions pricing prices list --subscription-id "SUB_ID" --paginate
 ```
 
-If the subscription was newly created, you can also use `asc subscriptions setup` with verification enabled instead of stitching together separate create and pricing steps.
+After the version metadata exists, you may rerun `asc subscriptions setup` with
+verification enabled to recheck the parent, pricing, screenshot, and
+availability state.
 
 ### Subscription availability
-If you need to explicitly enable territories for an existing subscription, use the pricing availability family.
+The underlying subscription-availability resource is deprecated in App Store Connect API 4.4. Keep this command family only for compatibility when ordinary upfront territory availability still needs it; Apple does not provide a one-for-one replacement for that case. For Monthly with 12-Month Commitment, use `asc subscriptions pricing monthly-commitment enable|disable|list` instead.
 
 ```bash
 asc subscriptions pricing availability edit --subscription-id "SUB_ID" --territories "USA,CAN,IND,BRA"
@@ -138,8 +248,10 @@ asc subscriptions pricing availability view --subscription-id "SUB_ID"
 
 ## IAP PPP workflow
 
-### New IAP: bootstrap with `setup`
-Use `setup` when you are creating a new IAP and want to create the product, first localization, and initial price schedule in one verified flow.
+### New IAP: bootstrap the parent and price with `setup`
+Use `setup` to create the product and initial price schedule. Its localization
+flags use the deprecated v1 resource, so add localization through an API 4.4.1
+IAP version after setup.
 
 ```bash
 asc iap setup \
@@ -147,16 +259,34 @@ asc iap setup \
   --type NON_CONSUMABLE \
   --reference-name "Pro Lifetime" \
   --product-id "com.example.pro.lifetime" \
-  --locale "en-US" \
-  --display-name "Pro Lifetime" \
-  --description "Unlock everything forever" \
   --price "9.99" \
   --base-territory "USA" \
   --output json
 ```
 
+Capture `.iapId` from the setup JSON, then create the version and metadata:
+
+```bash
+asc iap versions list --iap-id "IAP_ID" --state PREPARE_FOR_SUBMISSION --paginate --output json
+# If and only if the list has zero matches:
+asc iap versions create --iap-id "IAP_ID" --output json
+# For one match, reuse .data[0].id. For more than one, stop and require an explicit IAP_VERSION_ID.
+asc iap versions localizations list --version-id "IAP_VERSION_ID" --paginate --output json
+# If and only if en-US is missing:
+asc iap versions localizations create --version-id "IAP_VERSION_ID" --locale "en-US" --name "Pro Lifetime" --description "Unlock everything forever"
+# Otherwise, if and only if the resolved en-US values differ:
+asc iap versions localizations update --localization-id "IAP_LOC_ID" --name "Pro Lifetime" --description "Unlock everything forever"
+# Otherwise, do nothing.
+```
+
+Reuse the single `PREPARE_FOR_SUBMISSION` version. Create only when the list is
+empty, and stop for an explicit version ID if multiple matches are returned.
+Create the localization only when `en-US` is absent, update its resolved ID only
+when values differ, and otherwise do nothing.
+
 Notes:
-- `setup` verifies the created IAP, localization, and price schedule by default.
+- `setup` verifies the created IAP and price schedule by default; verify the
+  version localization with its version-scoped list command.
 - Use `--start-date` for scheduled pricing.
 - Use `--tier` or `--price-point-id` when you want deterministic tier- or ID-based setup.
 
@@ -226,7 +356,7 @@ For future-dated schedules, expect scheduled changes rather than an immediately 
 
 ## Notes
 - Prefer canonical commands in docs and automation: `asc subscriptions pricing ...`
-- Older `asc subscriptions prices ...` paths still exist, but the canonical pricing family is clearer.
+- `asc subscriptions pricing ...` is the supported subscription pricing family; do not use the removed `asc subscriptions prices ...` path.
 - Prefer canonical IAP commands in docs and automation: `asc iap pricing ...`
 - `asc subscriptions pricing prices import --dry-run` is the safest subscription batch PPP path today.
 - `asc subscriptions setup` and `asc iap setup` already provide built-in post-create verification.

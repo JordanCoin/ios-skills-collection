@@ -6,12 +6,14 @@ description: Run an offline ASO audit on canonical App Store metadata under `./m
 # asc ASO audit
 
 Run a two-phase ASO audit: offline checks against local metadata files, then keyword gap analysis via Astro MCP.
+When available, include Apple-generated app tags as a discoverability signal.
 
 ## Preconditions
 
 - Metadata pulled locally into canonical files via `asc metadata pull --app "APP_ID" --version "1.2.3" --dir "./metadata"`.
 - If metadata came from `asc migrate export` or `asc localizations download`, normalize it into the canonical `./metadata` layout before running this skill.
 - For Astro gap analysis: app tracked in Astro MCP (optional — offline checks run without it).
+- For Apple-generated discoverability tags: `asc app-tags list --app "APP_ID" --output json` works when the API returns tags for the app.
 
 ## Before You Start
 
@@ -47,6 +49,47 @@ How to check:
    - **Arabic:** split by whitespace, then also generate prefix-stripped variants (remove ال prefix) since Apple likely normalizes definite articles. For example, "القرآن" in subtitle should flag both "القرآن" and "قرآن" in keywords.
 4. Split keywords by comma, trim whitespace, lowercase
 5. Report intersection (including fuzzy matches from prefix stripping)
+
+### Optional: App Tag Alignment
+
+App tags are Apple-generated labels that can appear in search results and product pages. They are not editable ASO metadata, but they are useful evidence for whether Apple's classification matches the intended positioning.
+
+```bash
+asc app-tags list --app "APP_ID" --output json
+asc app-tags view --app "APP_ID" --id "TAG_ID" --output json
+```
+
+Use tags as context only:
+- If visible tags reinforce the subtitle/keyword strategy, note the alignment.
+- If tags point to an unintended category or use case, recommend metadata/category changes that may improve future classification.
+- Do not promise that changing metadata will immediately change Apple-generated tags.
+
+### Optional: Official Apple Search Plan
+
+When both App Store Connect and Apple Ads credentials are configured, use the
+experimental, read-only plan to join the selected metadata with official paid
+search evidence:
+
+```bash
+asc optimize search plan \
+  --app "APP_ID" \
+  --version "1.2.3" \
+  --ad-account "AD_ACCOUNT_ID" \
+  --country "US" \
+  --genre "PRODUCTIVITY_UTILITIES" \
+  --locale "en-US" \
+  --out-dir ".asc/optimization/1.2.3" \
+  --output markdown
+```
+
+- Authenticate App Store Connect with `asc auth` and Apple Ads separately with
+  `asc ads auth login`; the two credential sets are independent.
+- Treat the generated CSV and JSON files as review artifacts. The command does
+  not apply metadata, exact keywords, or negative keywords, and partial Apple
+  Ads source failures stay visible in the report.
+- Keep Apple's popularity, app-specific paid reach, paid search outcomes, and
+  metadata coverage distinct. Do not infer organic rank or keyword difficulty
+  from this plan.
 
 ### 2. Underutilized Fields
 
@@ -123,7 +166,7 @@ If Astro MCP is available and the app is tracked, run keyword gap analysis. **Ru
 
 1. **Get current keywords**: Call `get_app_keywords` with the app ID to retrieve tracked keywords and their current rankings.
 
-2. **Ensure multi-store tracking**: For each locale with a corresponding App Store territory (e.g., `ar-SA` → Saudi Arabia, `fr-FR` → France, `tr` → Turkey), use `add_keywords` to add keyword tracking in that store. Without this, `search_rankings` returns empty for non-US stores.
+2. **Check multi-store tracking**: Query existing tracking for each locale's App Store territory. Report untracked stores as unavailable and continue the audit. Use `add_keywords` only when the user separately authorizes tracking setup; empty rankings for an untracked store do not prove poor performance.
 
 3. **Extract competitor keywords**: Call `extract_competitors_keywords` with 3-5 top competitor app IDs to find keyword gaps. This is the highest-value Astro tool — it reveals keywords competitors rank for that you don't. Run this per store when possible.
 
@@ -147,7 +190,7 @@ Flag high-value combos in recommendations.
 
 - Astro MCP not connected → skip with note: "Connect Astro MCP for keyword gap analysis"
 - App not tracked in Astro → skip with note: "Add app to Astro with `mcp__astro__add_app` for gap analysis"
-- Store not tracked for a locale → add tracking with `add_keywords` before querying
+- Store not tracked for a locale → report the gap and skip its rankings; tracking setup requires separate authorization
 
 ## Output Format
 

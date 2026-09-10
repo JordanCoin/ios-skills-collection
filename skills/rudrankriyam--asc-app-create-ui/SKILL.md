@@ -94,13 +94,14 @@ asc apps list --bundle-id "com.example.app" --output json
 ```bash
 asc app-setup info set --app "APP_ID" --primary-locale "en-US"
 asc app-setup categories set --app "APP_ID" --primary GAMES
-asc web apps availability create \
+asc pricing availability create \
   --app "APP_ID" \
   --territory "USA,GBR" \
+  --available true \
   --available-in-new-territories true
 ```
 
-Use the experimental web flow above only for the first availability bootstrap. If app availability already exists, switch to `asc pricing availability edit --app "APP_ID" ...` for later territory changes.
+Use `asc pricing availability create` only for the first availability bootstrap. If Apple rejects that public-API bootstrap, authenticate a web session with `asc web auth login --apple-id "EMAIL"` and retry with `asc web apps availability create --app "APP_ID" --territory "USA,GBR" --available-in-new-territories true`, or configure Pricing and Availability in App Store Connect. If app availability already exists, switch to `asc pricing availability edit --app "APP_ID" ...` for later territory changes.
 
 ## Known UI Automation Issues
 
